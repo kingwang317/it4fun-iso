@@ -53,13 +53,13 @@
 						<div class="form-group">
 							<label class="col-sm-2 col-sm-2 control-label">原文</label>
 							<div class="col-sm-8"> 
-								<textarea class="form-control" rows="10" name="description" id="description"><?php echo htmlspecialchars($record->description); ?></textarea>
+								<textarea class="form-control" rows="10" name="description" id="description"><?php echo htmlspecialchars_decode($record->description); ?></textarea>
 							</div>
 						</div>	
 						<div class="form-group">
 							<label class="col-sm-2 col-sm-2 control-label">解析</label>
 							<div class="col-sm-8"> 
-								<textarea class="form-control" rows="10" name="parse" id="parse"><?php echo htmlspecialchars($record->parse); ?></textarea>
+								<textarea class="form-control" rows="10" name="parse" id="parse"><?php echo htmlspecialchars_decode($record->parse); ?></textarea>
 							</div>
 						</div>						  
 						<div class="form-group">

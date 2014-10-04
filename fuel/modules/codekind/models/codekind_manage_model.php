@@ -77,9 +77,14 @@ class Codekind_manage_model extends MY_Model {
         }
     }
 
-	public function get_code_list_for_other_mod($codekind_key)
+	public function get_code_list_for_other_mod($codekind_key,$single_node=true)
 	{
-		$sql = @"SELECT * FROM mod_code WHERE codekind_key=? AND parent_id=-1";
+		if($single_node){
+			$sql = @"SELECT * FROM mod_code WHERE codekind_key=? AND parent_id=-1 ORDER BY parent_id,code_value1";
+		}else{
+			$sql = @"SELECT * FROM mod_code WHERE codekind_key=? ORDER BY parent_id,code_value1 ";
+		}
+		
 		$para = array($codekind_key);
 		$query = $this->db->query($sql, $para);
 
@@ -96,7 +101,7 @@ class Codekind_manage_model extends MY_Model {
 
 	public function get_codekind_list_for_other_mod()
 	{
-		$sql = @"SELECT * FROM mod_codekind";
+		$sql = @"SELECT * FROM mod_codekind ORDER BY code_value1,code_id";
 		$query = $this->db->query($sql);
 
 		if($query->num_rows() > 0)

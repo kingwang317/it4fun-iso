@@ -25,7 +25,7 @@ class Chapter_manage extends Fuel_base_controller {
 	{
 		$base_url = base_url();
 		//查詢條件資料
-		$chapter = $this->codekind_manage_model->get_code_list_for_other_mod("CHAPTER");  
+		$chapter = $this->codekind_manage_model->get_code_list_for_other_mod("CHAPTER",false);  
 		$vars['chapter'] = $chapter;  
 		//查詢條件處理
 		$search_cp_kind = $this->input->get_post('search_cp_kind'); 
@@ -65,7 +65,7 @@ class Chapter_manage extends Fuel_base_controller {
 	function create()
 	{
 		//新增頁面資料
-		$chapter = $this->codekind_manage_model->get_code_list_for_other_mod("CHAPTER");
+		$chapter = $this->codekind_manage_model->get_code_list_for_other_mod("CHAPTER",false);
 		$vars['chapter'] = $chapter;
 		//新增頁基本設定
 		$vars['form_action'] = base_url().'fuel/'.$this->module_name.'/do_create';
@@ -133,7 +133,7 @@ class Chapter_manage extends Fuel_base_controller {
 			die;
 		}
 		//編輯頁面資料
-		$chapter = $this->codekind_manage_model->get_code_list_for_other_mod("CHAPTER");
+		$chapter = $this->codekind_manage_model->get_code_list_for_other_mod("CHAPTER",false);
 		$vars['chapter'] = $chapter; 
 	 	//編輯頁基本設定
 		$vars['form_action'] = base_url().'fuel/'.$this->module_name."/do_edit/$id";
