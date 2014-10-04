@@ -11,11 +11,16 @@
 			<div class="form-inline">
 				<div class="form-group">
 					<select class="form-control m-bot15" name="act">
-						<option value="by_title">依標頭</option>
+						<option value="all" <?php echo $act=="all"?"selected":"" ?>>不拘</option>
+						<option value="by_title" <?php echo $act=="by_title"?"selected":"" ?>>依分類群組</option>
+						<option value="by_content" <?php echo $act=="by_content"?"selected":"" ?>>依分類描述</option>
+						<option value="by_key" <?php echo $act=="by_key"?"selected":"" ?>>依分類代碼</option>
 					</select>
 				</div>
 				<div class="form-group">
-					<input type="text" class="form-control m-bot15" placeholder="Search..." name="search_item"/>
+					<input type="text" class="form-control m-bot15" placeholder="Search..." name="search_item" <?php if (isset($search_item)): ?>
+						value="<?php echo $search_item ?>"
+					<?php endif ?>/>
 				</div>
 				<div class="form-group">
 					<button type="submit" class="btn btn-info m-bot15">Search</button>

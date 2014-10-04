@@ -26,22 +26,28 @@ $config['tables']['mod_codekind'] = 'mod_codekind';
 
 
 $config['codekind_javascript'] = array(
-	'jquery.js',
-	'jquery.min.js',
-	'bootstrap.min',
-	'jquery-ui.min.js',
-	'jquery.sparkline.js',
+	// 'jquery.js',
+	// 'jquery.min.js',
+	// 'bootstrap.min',
+	// 'jquery-ui.min.js',
+	// 'jquery.sparkline.js',
+	site_url().'assets/admin_js/jquery.js',
+    site_url().'assets/admin_js/bootstrap.min.js', 
+	site_url().'assets/admin_js/jquery-ui.min.js',
 );
 
 $config['codekind_css'] = array(
-	'bootstrap.min.css',
-	'bootstrap-reset.css',
-	'font-awesome/css/font-awesome.css',
-	'jquery-easy-pie-chart/jquery.easy-pie-chart.css',
-	'style.css',
-	'style-responsive.css',
-	'admin_style.css',
-	'jquery-ui.css'
+	// 'bootstrap.min.css',
+	// 'bootstrap-reset.css',
+	// 'font-awesome/css/font-awesome.css',
+	// 'jquery-easy-pie-chart/jquery.easy-pie-chart.css',
+	// 'style.css',
+	// 'style-responsive.css',
+	// 'admin_style.css',
+	// 'jquery-ui.css'
+	site_url().'assets/admin_css/bootstrap.min.css',
+	site_url().'assets/admin_css/style.css',
+	site_url().'assets/admin_css/style-responsive.css'
 );
 
 ?>

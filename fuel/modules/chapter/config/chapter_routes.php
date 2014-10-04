@@ -10,5 +10,5 @@ $route[FUEL_ROUTE.'chapter/del/(:num)'] 		= CHAPTER_FOLDER.'/chapter_manage/do_d
 $route[FUEL_ROUTE.'chapter/do_create'] 		    = CHAPTER_FOLDER.'/chapter_manage/do_create';
 $route[FUEL_ROUTE.'chapter/do_edit/(:num)'] 	= CHAPTER_FOLDER.'/chapter_manage/do_edit/$1';
 $route[FUEL_ROUTE.'chapter/do_multi_del'] 		= CHAPTER_FOLDER.'/chapter_manage/do_multi_del'; 
-
+// $route[FUEL_ROUTE.'chapter/get'] 		= CHAPTER_FOLDER.'/chapter_manage/get_chapter';  
  

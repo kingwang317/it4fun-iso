@@ -88,7 +88,7 @@
 								<input type="text" class="form-control" name="code_value3" value="<?php echo $code_result->code_value3?>">
 							</div>
 						</div>
-						<div class="form-group">
+						<div class="form-group" style="display:none">
 							<label class="col-sm-2 col-sm-2 control-label">語言</label>
 							<div class="col-md-4">
 								<!-- <input type="text" class="form-control" name="lang_code" value="<?php echo $code_result->lang_code?>"> -->
@@ -105,7 +105,7 @@
 								</select>
 							</div>
 						</div>
-						<div class="form-group">
+						<div class="form-group" style="display:none">
 							<label class="col-sm-2 col-sm-2 control-label">圖片</label>
 							<div class="col-sm-4">
 								<input type="file" class="form-control" name="img" value=""> 

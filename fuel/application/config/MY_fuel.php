@@ -9,7 +9,7 @@
 $config['fuel_path'] = 'fuel/';
 
 // the name to be displayed on the top left of the admin
-$config['site_name'] = 'Sturdy CMS';
+$config['site_name'] = 'ISO CMS';
 
 // whether the admin backend is enabled or not
 $config['admin_enabled'] = TRUE;
@@ -23,17 +23,10 @@ $config['fuel_mode'] = 'AUTO';
 
 // specifies which modules are allowed to be used in the fuel admin
 $config['modules_allowed'] = array(
-	'user_guide',
-	'news',
-	'products',
-	'sup',
-	// 'casehelp',
-	// 'case',
-	'codekind',
-	// 'edm',
-	// 'member',
-	// 'google_analytics'
-	'country'
+	'user_guide', 
+	'codekind', 
+	'chapter',
+	'sample'
 );
 
 $config['dashboards'] = array('google_analytics');

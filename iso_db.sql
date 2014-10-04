@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 03, 2014 at 06:29 PM
+-- Generation Time: Oct 04, 2014 at 03:27 PM
 -- Server version: 5.5.25
 -- PHP Version: 5.2.17
 
@@ -311,7 +311,7 @@ CREATE TABLE IF NOT EXISTS `fuel_logs` (
   `message` text COLLATE utf8_unicode_ci NOT NULL,
   `type` varchar(30) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=425 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=427 ;
 
 --
 -- Dumping data for table `fuel_logs`
@@ -741,7 +741,9 @@ INSERT INTO `fuel_logs` (`id`, `entry_date`, `user_id`, `message`, `type`) VALUE
 (421, '2014-09-28 18:45:59', 1, 'Successful login by ''admin'' from ::1', 'debug'),
 (422, '2014-10-01 03:29:14', 1, 'Successful login by ''admin'' from ::1', 'debug'),
 (423, '2014-10-01 18:27:56', 1, 'Successful login by ''admin'' from ::1', 'debug'),
-(424, '2014-10-02 23:25:45', 1, 'Successful login by ''admin'' from ::1', 'debug');
+(424, '2014-10-02 23:25:45', 1, 'Successful login by ''admin'' from ::1', 'debug'),
+(425, '2014-10-03 17:58:38', 1, 'Successful login by ''admin'' from ::1', 'debug'),
+(426, '2014-10-03 23:28:58', 1, 'Successful login by ''admin'' from ::1', 'debug');
 
 -- --------------------------------------------------------
 
@@ -1008,7 +1010,7 @@ CREATE TABLE IF NOT EXISTS `fuel_users` (
 --
 
 INSERT INTO `fuel_users` (`id`, `user_name`, `password`, `email`, `first_name`, `last_name`, `language`, `reset_key`, `salt`, `super_admin`, `active`) VALUES
-(1, 'admin', '0a86bb4ab3f572c16badf6e45e91be456589322b', 'info@getfuelcms.com', 'Admin', 'test', 'english', '', '4ee98b14c46c06b711f3a8b4757ed8ff', 'yes', 'yes');
+(1, 'admin', 'bd37eade216e28d2ad4cef1afdd2617922267ee3', 'info@getfuelcms.com', 'Admin', 'test', 'english', '', '526a177af16732a66a42666d85616a3b', 'yes', 'yes');
 
 -- --------------------------------------------------------
 
@@ -1019,12 +1021,22 @@ INSERT INTO `fuel_users` (`id`, `user_name`, `password`, `email`, `first_name`, 
 CREATE TABLE IF NOT EXISTS `mod_chapter` (
   `id` bigint(10) NOT NULL AUTO_INCREMENT,
   `title` varchar(50) CHARACTER SET utf8 NOT NULL,
-  `description` text NOT NULL,
+  `description` text CHARACTER SET utf8 NOT NULL,
   `parse` text CHARACTER SET utf8 NOT NULL,
   `file_name` varchar(50) CHARACTER SET utf8 NOT NULL,
   `cp_kind` bigint(10) NOT NULL,
+  `cp_key` varchar(20) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `mod_chapter`
+--
+
+INSERT INTO `mod_chapter` (`id`, `title`, `description`, `parse`, `file_name`, `cp_kind`, `cp_key`) VALUES
+(1, '永續發展對利害關係人主要的影響和風險', 'a. 描述關鍵衝擊、風險及機會。\n組織應分兩部分,簡要說明主要的衝擊、風險及機會。 第一部分應著重於組織對永續發展或利害關係人權利的衝擊,權利的定義包含國家法律和相關國際公 認標準。這應該考慮組織之利害關係人的各種合理期望及利益。這部分應包含下列揭露:\n描述組織的重大經濟、環境與社會衝擊影響,以及相關的挑戰與機會。包括國家法律賦予利害關係 人的權利,以及國際公認標準及規範中的期望\n解釋如何對這些挑戰與機會進行優先排序', 'b. 描述關鍵衝擊、風險及機會。\n組織應分兩部分,簡要說明主要的衝擊、風險及機會。 第一部分應著重於組織對永續發展或利害關係人權利的衝擊,權利的定義包含國家法律和相關國際公 認標準。這應該考慮組織之利害關係人的各種合理期望及利益。這部分應包含下列揭露:\n描述組織的重大經濟、環境與社會衝擊影響,以及相關的挑戰與機會。包括國家法律賦予利害關係 人的權利,以及國際公認標準及規範中的期望\n解釋如何對這些挑戰與機會進行優先排序\n', '', 1, 'G4-2'),
+(2, '組織名稱', '組織名稱2', '組織名稱3', '', 1, 'G4-3'),
+(3, '主要品牌、產品及服務項目', 'a. 描述關鍵衝擊、風險及機會。\n組織應分兩部分,簡要說明主要的衝擊、風險及機會。 第一部分應著重於組織對永續發展或利害關係人權利的衝擊,權利的定義包含國家法律和相關國際公 認標準。這應該考慮組織之利害關係人的各種合理期望及利益。這部分應包含下列揭露:\n描述組織的重大經濟、環境與社會衝擊影響,以及相關的挑戰與機會。包括國家法律賦予利害關係 人的權利,以及國際公認標準及規範中的期望\n解釋如何對這些挑戰與機會進行優先排序', 'b. 描述關鍵衝擊、風險及機會。\n組織應分兩部分,簡要說明主要的衝擊、風險及機會。 第一部分應著重於組織對永續發展或利害關係人權利的衝擊,權利的定義包含國家法律和相關國際公 認標準。這應該考慮組織之利害關係人的各種合理期望及利益。這部分應包含下列揭露:\n描述組織的重大經濟、環境與社會衝擊影響,以及相關的挑戰與機會。包括國家法律賦予利害關係 人的權利,以及國際公認標準及規範中的期望\n解釋如何對這些挑戰與機會進行優先排序', '', 1, 'G4-4');
 
 -- --------------------------------------------------------
 
@@ -1035,24 +1047,26 @@ CREATE TABLE IF NOT EXISTS `mod_chapter` (
 CREATE TABLE IF NOT EXISTS `mod_code` (
   `code_id` bigint(10) unsigned NOT NULL AUTO_INCREMENT,
   `codekind_key` varchar(20) DEFAULT NULL,
-  `code_name` varchar(20) DEFAULT NULL,
+  `code_name` varchar(200) DEFAULT NULL,
   `code_key` varchar(20) DEFAULT NULL,
-  `code_value1` varchar(20) DEFAULT NULL,
-  `code_value2` varchar(20) DEFAULT NULL,
-  `code_value3` varchar(20) DEFAULT NULL,
+  `code_value1` varchar(200) DEFAULT NULL,
+  `code_value2` varchar(200) DEFAULT NULL,
+  `code_value3` varchar(200) DEFAULT NULL,
   `parent_id` bigint(10) DEFAULT '-1',
   `modi_time` datetime DEFAULT NULL,
   `lang_code` varchar(5) DEFAULT NULL,
   `img` varchar(200) NOT NULL,
   PRIMARY KEY (`code_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `mod_code`
 --
 
 INSERT INTO `mod_code` (`code_id`, `codekind_key`, `code_name`, `code_key`, `code_value1`, `code_value2`, `code_value3`, `parent_id`, `modi_time`, `lang_code`, `img`) VALUES
-(1, 'CHAPTER', 'GRIR', '', 'Global Reporting Ini', '', '', -1, '2014-10-03 16:34:58', NULL, '');
+(1, 'CHAPTER', 'G4', '', 'Global Reporting Initiative Sustainability Reporting Guidelines Version 4', '', '', -1, '2014-10-04 09:54:35', 'zh-TW', ''),
+(2, 'INDUSTRY', '資訊', 'IT', '', '', '', -1, '2014-10-04 11:33:38', NULL, ''),
+(3, 'INDUSTRY', '媒體', 'ME', '', '', '', -1, '2014-10-04 11:38:01', 'zh-TW', '');
 
 -- --------------------------------------------------------
 
@@ -1071,14 +1085,15 @@ CREATE TABLE IF NOT EXISTS `mod_codekind` (
   `modi_time` datetime DEFAULT NULL,
   `lang_code` varchar(5) DEFAULT NULL,
   PRIMARY KEY (`codekind_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `mod_codekind`
 --
 
 INSERT INTO `mod_codekind` (`codekind_id`, `codekind_name`, `codekind_key`, `codekind_desc`, `codekind_value1`, `codekind_value2`, `codekind_value3`, `modi_time`, `lang_code`) VALUES
-(1, '章節分類', 'CHAPTER', '章節分類', '', '', '', '2014-10-03 16:33:47', '0');
+(1, '章節分類', 'CHAPTER', '章節分類', '', '', '', '2014-10-03 16:33:47', '0'),
+(2, '產業別', ' INDUSTRY', '產業別', 'INDUSTRY', '', '', '2014-10-04 11:32:52', '0');
 
 -- --------------------------------------------------------
 
@@ -1114,7 +1129,14 @@ CREATE TABLE IF NOT EXISTS `mod_cp_sample` (
   `content` text CHARACTER SET utf8 NOT NULL,
   `file_name` varchar(50) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `mod_cp_sample`
+--
+
+INSERT INTO `mod_cp_sample` (`id`, `title`, `cps_kind`, `cp_id`, `content`, `file_name`) VALUES
+(1, '1', 2, 2, '&lt;div style=&quot;text-align: center;&quot;&gt;&lt;strong&gt;&lt;em&gt;Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo.&lt;/em&gt;&lt;/strong&gt;&lt;/div&gt;\n', '');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

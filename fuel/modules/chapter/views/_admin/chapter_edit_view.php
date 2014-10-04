@@ -1,4 +1,4 @@
-<?php echo css($this->config->item('news_css'), 'news')?> 
+<?php echo css($this->config->item('chapter_css'), 'chapter')?> 
 
 <section class="wrapper" style="margin:0px">
 	<div class="row" style="margin:10px 10px">
@@ -9,7 +9,7 @@
 	<div class="row" style="margin:10px 10px">
 		<div class="span12">
 			<ul class="breadcrumb">
-			  <li>位置：<a href="<?php echo $module_uri?>">列表</a></li>
+			  <li>位置：<a href="<?php echo $module_uri?>">章節管理</a></li>
 			  <li class="active"><?php echo $view_name?></li>
 			</ul>
 		</div>
@@ -23,66 +23,51 @@
 				<div class="panel-body">
 					<div class="form-horizontal tasi-form">						 
 				 		<div class="form-group">
-							<label class="col-sm-2 col-sm-2 control-label">語言</label>
+							<label class="col-sm-2 col-sm-2 control-label">章節分類</label>
 							<div class="col-sm-4">
-								 <select name="lang">
+								 <select name="cp_kind">
 									<?php
-										if(isset($lang)):
+										if(isset($chapter)):
 									?>	
-									<?php   foreach($lang as $key=>$rows):?>
-										<option value="<?php echo $rows->code_key ?>" <?php if ($news->lang == $rows->code_key): ?>
+									<?php   foreach($chapter as $key=>$rows):?>
+										<option value="<?php echo $rows->code_id ?>" <?php if ($record->cp_kind == $rows->code_id): ?>
 											selected
 										<?php endif ?>><?php echo $rows->code_name ?></option>
 									<?php endforeach;?>
 									<?php endif;?>
 								</select>
 							</div>
-						</div>	
-					    <div class="form-group">
-							<label class="col-sm-2 col-sm-2 control-label">上稿類別</label>
-							<div class="col-sm-4">
-								<select name="type">
-									<?php 
-										if(isset($type)):
-									?>	
-									<?php   foreach($type as $key=>$rows):?>
-												<option value="<?php echo $rows->code_id ?>" <?php if ($rows->code_id==$news->type): ?>
-													selected
-												<?php endif ?> ><?php echo $rows->code_name ?></option>
-										<?php endforeach;?>
-									<?php endif;?>
-								</select>
-							</div>
 						</div>	   
 						<div class="form-group">
-							<label class="col-sm-2 col-sm-2 control-label">日期</label>
+							<label class="col-sm-2 col-sm-2 control-label">章節代號</label>
 							<div class="col-sm-4">
-								<?php 
-	                             $date = explode(" ", $news->date); 
-	                             $date2 = $date[0]; 
-
-	                            ?>
-								<input type="text" class="form-control date" name="date" value="<?php echo $date2; ?>" /> 
+								<input type="text" class="form-control" name="cp_key" value="<?php echo $record->cp_key; ?>"> 
+							</div>
+						</div>    
+						<div class="form-group">
+							<label class="col-sm-2 col-sm-2 control-label">主旨</label>
+							<div class="col-sm-4">
+								<input type="text" class="form-control" name="title" value="<?php echo $record->title; ?>"> 
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-2 col-sm-2 control-label">標題</label>
-							<div class="col-sm-4">
-								<input type="text" class="form-control" name="title" value="<?php echo $news->title; ?>" /> 
+							<label class="col-sm-2 col-sm-2 control-label">原文</label>
+							<div class="col-sm-8"> 
+								<textarea class="form-control" rows="10" name="description" id="description"><?php echo htmlspecialchars($record->description); ?></textarea>
 							</div>
-						</div>
+						</div>	
 						<div class="form-group">
-							<label class="col-sm-2 col-sm-2 control-label">內容</label>
-							<div class="col-sm-4"> 
-								<textarea class="form-control" rows="3" name="content"><?php echo $news->content; ?></textarea>
+							<label class="col-sm-2 col-sm-2 control-label">解析</label>
+							<div class="col-sm-8"> 
+								<textarea class="form-control" rows="10" name="parse" id="parse"><?php echo htmlspecialchars($record->parse); ?></textarea>
 							</div>
 						</div>						  
 						<div class="form-group">
-							<label class="col-sm-2 col-sm-2 control-label">圖片</label>
+							<label class="col-sm-2 col-sm-2 control-label">檔案</label>
 							<div class="col-sm-4">
-								<input type="file" class="form-control" name="img" value=""> 
-								<img src="<?php echo site_url()."assets/".$news->img; ?>" />
-								<input type="hidden" value="<?php echo $news->img; ?>" name="exist_img" />	
+								<input type="file" class="form-control" name="file_name" value=""> 
+								<a href="<?php echo site_url()."assets/".$record->file_name; ?>" />
+								<input type="hidden" value="<?php echo $record->file_name; ?>" name="exist_file_name" />	
 							</div>
 						</div>	
 						<div class="form-group">
@@ -100,7 +85,8 @@
 </section>
 <!-- Tab panes -->
 
-<?php echo js($this->config->item('news_javascript'), 'news')?>
+<?php echo js($this->config->item('chapter_javascript'), 'chapter')?>
+<?php echo js($this->config->item('chapter_ck_javascript'), 'chapter')?>
  
 <script>
 	function aHover(url)
@@ -109,8 +95,22 @@
 	}
 
 	jQuery(document).ready(function($) {
-	 
-		$('.date').datepicker({dateFormat: 'yy-mm-dd'}); 
+	  	var config =
+            {
+                height: 380,
+                width: 850,
+                linkShowAdvancedTab: false,
+                scayt_autoStartup: false,
+                enterMode: Number(2),
+                toolbar_Full: [
+                				[ 'Styles', 'Format', 'Font', 'FontSize', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ],
+                				['Bold', 'Italic', 'Underline', '-', 'NumberedList', 'BulletedList'],
+                                ['Link', 'Unlink'], ['Undo', 'Redo', '-', 'SelectAll'], [ 'TextColor', 'BGColor' ],['Checkbox', 'Radio', 'Image' ], ['Source']
+                              ]
+
+            };
+		$( 'textarea#description' ).ckeditor(config);
+		$( 'textarea#parse' ).ckeditor(config);
 
 	});
 </script>

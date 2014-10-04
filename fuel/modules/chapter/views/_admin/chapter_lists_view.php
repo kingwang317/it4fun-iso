@@ -1,4 +1,4 @@
-<?php echo css($this->config->item('news_css'), 'news')?> 
+<?php echo css($this->config->item('chapter_css'), 'chapter')?> 
 
 <section class="main-content">
 <section class="wrapper" style="margin:0px">
@@ -9,7 +9,7 @@
 	<div class="row">
 		<div class="span12">
 			<ul class="breadcrumb">
-			  <li>位置：上稿列表</li>
+			  <li>位置：章節管理</li>
 			</ul>
 		</div>
 	</div> 
@@ -19,15 +19,16 @@
 			<div class="form-inline" style="margin-top:10px">
 				<div class="form-group">
 					<label class="col-sm-4 control-label" >
-						語言
+						章節分類
 					</label>
 				    <div class="col-sm-8">
-				       <select name="search_lang">
+				       <select name="search_cp_kind">
+				       		<option value="ALL">不拘</option>
 							<?php
-								if(isset($lang)):
+								if(isset($chapter)):
 							?>	
-							<?php   foreach($lang as $key=>$rows):?>
-								<option value="<?php echo $rows->code_key ?>" <?php if ($search_lang == $rows->code_key): ?>
+							<?php   foreach($chapter as $key=>$rows):?>
+								<option value="<?php echo $rows->code_key ?>" <?php if (isset($search_cp_kind) && $search_cp_kind == $rows->code_key): ?>
 									selected
 								<?php endif ?>><?php echo $rows->code_name ?></option>
 							<?php endforeach;?>
@@ -35,20 +36,12 @@
 						</select>
 				    </div>
 				    <label class="col-sm-4 control-label" >
-						上稿類別
+						章節代號
 					</label>
 				    <div class="col-sm-8">
-				       <select name="search_type">
-							<?php
-								if(isset($type)):
-							?>	
-							<?php   foreach($type as $key=>$rows):?>
-								<option value="<?php echo $rows->code_id ?>" <?php if ($search_type == $rows->code_id): ?>
-									selected
-								<?php endif ?>><?php echo $rows->code_name ?></option>
-							<?php endforeach;?>
-							<?php endif;?>
-						</select>
+				       <input type="text" name="search_cp_key" <?php if (isset($search_cp_key)): ?>
+				       		value="<?php echo $search_cp_key ?>"
+				       <?php endif ?> />
 				    </div>
 				</div>
 			</div>  
@@ -86,11 +79,10 @@
 								<input type="checkbox" id="select-all"/>
 							</label>
 						</th>
-						<th>語言</th>
-						<th>日期</th>
-						<th>標題</th>
-						<th>內容</th>
-						<th>圖片</th> 
+						<th>編號</th>
+						<th>章節分類</th>
+						<th>章節代號</th>
+						<th>主旨</th> 
 						<th>刪除</th>
 					</tr>
 				</thead>
@@ -108,24 +100,10 @@
 								<input type="checkbox" name="id[]" newsid="<?php echo $rows->id?>"/>
 							</label>
 						</td> 
-					    <td><?php echo $rows->lang?></td>
-						<td style="width:100px">
-							<?php 
-                             $date = explode(" ", $rows->date); 
-                             $date2 = $date[0];
-                             echo $date2;
-
-                            ?>
-						</td>
-						<td><?php echo $rows->title?></td>
-						<td><?php echo substr($rows->content,0,10)."..."?></td>
-						<td>
-							<?php if (isset($rows->img) && !empty($rows->img)): ?>
-								<img style="width:150px" src="<?php echo site_url()."assets/".$rows->img?>" />
-							<?php endif ?>
-							
-						</td>
-						<!-- <td><?php echo site_url()."assets/".$rows->img?></td> -->
+					    <td><?php echo $rows->id?></td>
+					    <td><?php echo $rows->code_name?></td>
+						<td><?php echo $rows->cp_key?></td>
+						<td><?php echo $rows->title?></td> 
 						<td>
 							<button class="btn btn-xs btn-primary" type="button" onclick="aHover('<?php echo $edit_url.$rows->id?>')" >更新</button>
 							<button class="btn btn-xs btn-danger del" type="button" onclick="dialog_chk('<?php echo $rows->id?>')">刪除</button>
@@ -154,7 +132,7 @@
 	</div>
 </section>
 </section>
-<?php echo js($this->config->item('news_javascript'), 'news')?>
+<?php echo js($this->config->item('chapter_javascript'), 'chapter')?>
 <script>
 	var $j = jQuery.noConflict(true);
 

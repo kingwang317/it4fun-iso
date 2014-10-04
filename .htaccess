@@ -1,7 +1,7 @@
 Options +FollowSymLinks
 <IfModule mod_rewrite.c>
 RewriteEngine On
-RewriteBase /ISO
+RewriteBase /it4fun-iso
 
 <Files .*>
 	Order Deny,Allow

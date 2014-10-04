@@ -5,7 +5,8 @@
 |--------------------------------------------------------------------------
 */
 $config['nav']['chapter'] = array(
-'chapter/lists'		=> '章節管理'
+'chapter/lists'		=> '章節管理', 
+'sample/lists'		=> '範例管理'
 );
 
 // deterines whether to use this configuration below or the database for controlling the blogs behavior
@@ -21,6 +22,11 @@ $config['chapter_javascript'] = array(
     site_url().'assets/admin_js/jquery.js',
     site_url().'assets/admin_js/bootstrap.min.js', 
 	site_url().'assets/admin_js/jquery-ui.min.js',
+);
+
+$config['chapter_ck_javascript'] = array(
+    site_url().'assets/admin_js/ckeditor.js',
+    site_url().'assets/admin_js/adapters/jquery.js',  
 );
 
 $config['chapter_css'] = array(

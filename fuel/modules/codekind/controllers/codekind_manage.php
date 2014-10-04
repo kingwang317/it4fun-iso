@@ -14,6 +14,8 @@ class Codekind_manage extends Fuel_base_controller {
 		$this->load->helper('ajax');
 		$this->load->library('pagination');
 		$this->load->library('set_page');
+		$this->load->library('session');
+		$this->load->library('comm');
 	}
 	
 	function lists($dataStart=0)
@@ -22,23 +24,28 @@ class Codekind_manage extends Fuel_base_controller {
 
 		$act = $this->input->get_post("act");
 		$search_item = $this->input->get_post("search_item");
-		$filter = "";
+		$filter = " WHERE 1=1 ";
 
 		if($act)
 		{
 			switch ($act) {
 				case 'by_title':
-					$filter = " WHERE cd_title LIKE '%".$search_item."%'";
+					$filter .= " AND codekind_name LIKE '%".$search_item."%'"; 
 					break;
 				case 'by_content':
-					$filter = " WHERE cd_content LIKE '%".$search_item."%'";
+					$filter .= " AND codekind_desc LIKE '%".$search_item."%'"; 
+					break;	
+				case 'by_key':
+					$filter .= " AND codekind_key LIKE '%".$search_item."%'"; 
 					break;					
 				default:
-					$filter = " WHERE cd_title LIKE %'".$search_item."'%";
+					 
 					break;
 			}
-		}
+		} 
 
+		$vars['act'] = $act;  
+		$vars['search_item'] = $search_item;  
 		
 		$target_url = $base_url.'fuel/codekind/lists/';
 
@@ -150,18 +157,18 @@ class Codekind_manage extends Fuel_base_controller {
 		$insert_data['codekind_value1'] = $this->input->get_post("codekind_value1");
 		$insert_data['codekind_value2'] = $this->input->get_post("codekind_value2");
 		$insert_data['codekind_value3'] = $this->input->get_post("codekind_value3");
-		$insert_data['lang_code'] = $this->input->get_post("lang_code");
+		$insert_data['lang_code'] = 'zh-TW';//$this->input->get_post("lang_code");
 
 		$success = $this->codekind_manage_model->insert($insert_data);
 
 		if($success)
 		{
-			$this->plu_redirect($module_uri, 0, "新增成功");
+			$this->comm->plu_redirect($module_uri, 0, "新增成功");
 			die();
 		}
 		else
 		{
-			$this->plu_redirect($module_uri, 0, "新增失敗");
+			$this->comm->plu_redirect($module_uri, 0, "新增失敗");
 			die();
 		}
 
@@ -213,14 +220,14 @@ class Codekind_manage extends Fuel_base_controller {
 	function do_code_create()
 	{ 
 		$post_arr = $this->input->post();
+		$post_arr['lang_code'] = 'zh-TW';
 		$root_path = assets_server_path('code_img/'.$post_arr['code_key']."/".$post_arr['lang_code']."/");
 		if (!file_exists($root_path)) {
 		    mkdir($root_path, 0777, true);
 		}
 		 
 		$module_uri = base_url().$this->module_uri;
-		 
-		$post_arr = $this->input->post();
+		  
 		$config['upload_path'] = $root_path;
 		$config['allowed_types'] = 'png';
 		$config['max_size']	= '9999';
@@ -255,12 +262,12 @@ class Codekind_manage extends Fuel_base_controller {
 		$success = $this->codekind_manage_model->code_insert($post_arr); 
 		if($success)
 		{
-			$this->plu_redirect($redirect_uri, 0, "新增成功");
+			$this->comm->plu_redirect($redirect_uri, 0, "新增成功");
 			die();
 		}
 		else
 		{
-			$this->plu_redirect($redirect_uri, 0, "新增失敗");
+			$this->comm->plu_redirect($redirect_uri, 0, "新增失敗");
 			die();
 		}
  
@@ -292,31 +299,31 @@ class Codekind_manage extends Fuel_base_controller {
 		$module_uri = base_url().$this->module_uri;
 		if(!empty($codekind_id))
 		{
-			$update_data = array();
+			$update_data = array(); 
 			$update_data['codekind_name'] = $this->input->get_post("codekind_name");
 			$update_data['codekind_desc'] = $this->input->get_post("codekind_desc");
 			$update_data['codekind_key'] = $this->input->get_post("codekind_key");
 			$update_data['codekind_value1'] = $this->input->get_post("codekind_value1");
 			$update_data['codekind_value2'] = $this->input->get_post("codekind_value2");
 			$update_data['codekind_value3'] = $this->input->get_post("codekind_value3");
-			$update_data['lang_code'] = $this->input->get_post("lang_code");
+			$update_data['lang_code'] = 'zh-TW';//$this->input->get_post("lang_code");
 
 			$success = $this->codekind_manage_model->update($codekind_id, $update_data);
 
 			if($success)
 			{
-				$this->plu_redirect($module_uri, 0, "更新成功");
+				$this->comm->plu_redirect($module_uri, 0, "更新成功");
 				die();
 			}
 			else
 			{
-				$this->plu_redirect($module_uri, 0, "更新失敗");
+				$this->comm->plu_redirect($module_uri, 0, "更新失敗");
 				die();
 			}
 		}
 		else
 		{
-			$this->plu_redirect($module_uri, 0, "更新失敗");
+			$this->comm->plu_redirect($module_uri, 0, "更新失敗");
 			die();
 		}
 
@@ -376,13 +383,13 @@ class Codekind_manage extends Fuel_base_controller {
 			
 
 			$post_arr = $this->input->post();
+			$post_arr['lang_code'] = 'zh-TW';
 			$root_path = assets_server_path('code_img/'.$post_arr['code_key']."/".$post_arr['lang_code']."/");
 			if (!file_exists($root_path)) {
 			    mkdir($root_path, 0777, true);
 			}
 		 
-			 
-			$post_arr = $this->input->post();
+			  
 			$config['upload_path'] = $root_path;
 			$config['allowed_types'] = 'png';
 			$config['max_size']	= '9999';
@@ -416,18 +423,18 @@ class Codekind_manage extends Fuel_base_controller {
 			 
 			if($success)
 			{
-				$this->plu_redirect($redirect_uri, 0, "更新成功");
+				$this->comm->plu_redirect($redirect_uri, 0, "更新成功");
 				die();
 			}
 			else
 			{
-				$this->plu_redirect($redirect_uri, 0, "更新失敗");
+				$this->comm->plu_redirect($redirect_uri, 0, "更新失敗");
 				die();
 			}
 		}
 		else
 		{
-			$this->plu_redirect($module_uri, 0, "更新失敗");
+			$this->comm->plu_redirect($module_uri, 0, "更新失敗");
 			die();
 		}
 
@@ -482,23 +489,26 @@ class Codekind_manage extends Fuel_base_controller {
 		echo json_encode($response);
 	}
 
-	function plu_redirect($url, $delay, $msg)
-	{
-	    if( isset($msg) )
-	    {
-	        $this->notify($msg);
-	    }
-
-	    echo "<meta http-equiv='Refresh' content='$delay; url=$url'>";
-	}
-
-	function notify($msg)
-	{
-	    $msg = addslashes($msg);
-	    echo "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />";
-	    echo "<script type='text/javascript'>alert('$msg')</script>\n";
-	    echo "<noscript>$msg</noscript>\n";
-	    return;
+	public function set_session($key, $value, $op="=")
+	{ 
+		$filter = "";
+	    if ($value != "") {
+	    	if ($op=="like") {
+	    		$filter = " AND $key like '%$value%' ";
+	    	}else 
+				$this->session->set_userdata($key, $value);
+		}else{
+			// if (!isset($$value) ) {
+			// 	$value = $this->session->userdata($key); 
+			// 	if ($value != "") {
+			// 		$value = $value;
+			// 		$filter = " AND $key = '$value'";
+			// 	} 
+			// }else{
+				$this->session->set_userdata($key, "");
+			// }				
+		}
+		return $filter;
 	}
 
 }

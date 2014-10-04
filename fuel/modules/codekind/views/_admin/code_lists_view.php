@@ -55,7 +55,7 @@
 							</label>
 						</th>
 						<th>分類名稱</th>
-						<th>語系</th>
+						<!-- <th>語系</th> -->
 						<th>Level</th>
 						<th>更新時間</th>
 						<th>刪除</th>
@@ -76,7 +76,7 @@
 							</label>
 						</td>
 						<td><a href="<?php echo $edit_url.$rows->code_id?>"><?php echo $rows->code_name?></a></td>
-						<td><?php echo $rows->lang_code; ?></td>	
+						<!-- <td><?php echo $rows->lang_code; ?></td>	 -->
 						<td>
 							<button class="btn btn-xs btn-info" type="button" onclick="aHover('<?php echo $level_url.$rows->code_id?>')">下一層</button>
 						</td>
@@ -92,7 +92,7 @@
 					{
 					?>
 						<tr>
-							<td colspan="5">No results.</td>
+							<td colspan="4">No results.</td>
 						</tr>
 					<?php
 					}
