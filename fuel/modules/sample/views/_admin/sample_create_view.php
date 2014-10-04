@@ -38,7 +38,9 @@
 						<div class="form-group">
 							<label class="col-sm-2 col-sm-2 control-label">對應章節</label>
 							<div class="col-sm-4"> 
-								<input type="text" class="form-control" name="cp_key" id="cp_key" value="">  
+								<input type="text" class="form-control" name="cp_key" id="cp_key" <?php if (isset($cp_key)): ?>
+									value="<?php echo $cp_key ?>"
+								<?php endif ?> >  
 								<select name="cp_id" id="cp_id" >
 									<?php
 										if(isset($chapter)):
@@ -90,13 +92,13 @@
 	{
 		location.href = url;
 	}
+ 
 
 	jQuery(document).ready(function($) {
 	 
 	    $("#cp_key").blur(function() {
-	    	$("#cp_id option:selected").removeAttr("selected");
-	    	console.log('hi');
-	        $("#cp_id option:contains('" + $(this).text() + "')").attr("selected", true);
+	     
+	        $("#cp_id option:contains('" + $(this).val() + "')").attr("selected", true);
 	    });
 
 	    $("#cp_id").change(function() { 
@@ -105,6 +107,8 @@
 	    	var ary = selectedValue.split(" ");
 	    	$("#cp_key").val(ary[0]);
 	    })
+
+	    $("#cp_key").trigger('blur');
 
 	    var config =
             {

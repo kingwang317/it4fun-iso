@@ -102,9 +102,7 @@
 	jQuery(document).ready(function($) {
 	  
 		$("#cp_key").blur(function() {
-	    	$("#cp_id option:selected").removeAttr("selected");
-	    	console.log('hi');
-	        $("#cp_id option:contains('" + $(this).text() + "')").attr("selected", true);
+	    	$("#cp_id option:contains('" + $(this).val() + "')").attr("selected", true);
 	    });
 
 	    $("#cp_id").change(function() { 

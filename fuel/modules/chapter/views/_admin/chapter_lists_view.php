@@ -105,6 +105,7 @@
 						<td><?php echo $rows->cp_key?></td>
 						<td><?php echo $rows->title?></td> 
 						<td>
+							<button class="btn btn-xs btn-info" type="button" onclick="aHover('<?php echo $sample_url."?cp_id=".$rows->id."&cp_key=".$rows->cp_key; ?>')" >建立範例</button>
 							<button class="btn btn-xs btn-primary" type="button" onclick="aHover('<?php echo $edit_url.$rows->id?>')" >更新</button>
 							<button class="btn btn-xs btn-danger del" type="button" onclick="dialog_chk('<?php echo $rows->id?>')">刪除</button>
 						</td>

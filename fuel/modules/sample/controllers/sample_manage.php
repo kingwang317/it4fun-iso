@@ -67,6 +67,11 @@ class Sample_manage extends Fuel_base_controller {
  
 	function create()
 	{
+		//
+		$cp_key = $this->input->get_post("cp_key");
+		$cp_id = $this->input->get_post("cp_id");
+		$vars['cp_key'] = $cp_key;
+		$vars['cp_id'] = $cp_id;
 		//新增頁面資料
 		$industry = $this->codekind_manage_model->get_code_list_for_other_mod("INDUSTRY");
 		$vars['industry'] = $industry;

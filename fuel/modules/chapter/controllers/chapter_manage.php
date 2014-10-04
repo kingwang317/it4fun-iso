@@ -53,6 +53,7 @@ class Chapter_manage extends Fuel_base_controller {
 		$vars['create_url'] = $base_url.'fuel/'.$this->module_name.'/create';
 		$vars['edit_url'] = $base_url.'fuel/'.$this->module_name.'/edit/';
 		$vars['del_url'] = $base_url.'fuel/'.$this->module_name.'/del/';
+		$vars['sample_url'] = $base_url.'fuel/sample/create'; 
 		$vars['multi_del_url'] = $base_url.'fuel/'.$this->module_name.'/do_multi_del';
 		$vars['results'] = $results;
 		$vars['total_rows'] = $total_rows; 
