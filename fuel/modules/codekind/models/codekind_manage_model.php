@@ -91,12 +91,48 @@ class Codekind_manage_model extends MY_Model {
 		if($query->num_rows() > 0)
 		{
 			$result = $query->result();
+			$parent_arr = array();
 
-			return $result;
+			foreach ($result as $key => $value) {
+			
+				$parent_arr[$value->parent_id] = 1;
+
+			}
+
+			$result_new = $this->remove_parent($this->bind_node($result),$parent_arr);
+			return $result_new;
 		}
-
 		return;
 
+	}
+
+	public function bind_node($result){
+		$new_arr = array();
+		$parent_arr = array();
+		foreach ($result as $key => $value) {
+
+				$new_arr[$value->code_id] = $value;
+			
+		}
+		foreach ($new_arr as $key => $value) {
+
+				if(isset($new_arr[$value->parent_id])){
+					$new_arr[$key]->code_name = $new_arr[$value->parent_id]->code_name .">>". $new_arr[$key]->code_name;
+				    $pid = $new_arr[$value->parent_id]->parent_id;	
+					$new_arr[$key]->parent_id = $pid;
+					$new_arr = $this->bind_node($new_arr);
+				}
+		}	
+		return $new_arr;
+	}
+
+	public function remove_parent($new_arr,$result){
+		foreach ($result as $key => $value) {
+			if(isset($new_arr[$key])){
+				unset($new_arr[$key]);
+			}
+		}
+		return $new_arr;
 	}
 
 	public function get_codekind_list_for_other_mod()
