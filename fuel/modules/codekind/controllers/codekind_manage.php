@@ -180,7 +180,7 @@ class Codekind_manage extends Fuel_base_controller {
 		$codekind_key = $this->input->get_post("codekind_key");
 		$code_id = $this->input->get_post("code_id");
 
-		$filter = " WHERE parent_id in ( select parent_id from mod_code where code_id = '$code_id' ) ";
+		$filter = "";
 		$codekind_results = $this->codekind_manage_model->get_codekind_list(0, 9999999, "");
 		$code_list = $this->codekind_manage_model->get_codekind_list(0, 9999999, $filter, "mod_code");
 
@@ -348,7 +348,7 @@ class Codekind_manage extends Fuel_base_controller {
 				$vars['module_uri'] = base_url()."fuel/codekind/lists";
 			}			
 
-			$filter = " WHERE parent_id=-1 ";
+			$filter = " WHERE codekind_key = 'CHAPTER' ";
 			$codekind_results = $this->codekind_manage_model->get_codekind_list(0, 9999999, "");
 			$code_list = $this->codekind_manage_model->get_codekind_list(0, 9999999, $filter, "mod_code");
 			$code_result = $this->codekind_manage_model->get_code_detail($code_id);

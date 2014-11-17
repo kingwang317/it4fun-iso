@@ -33,20 +33,70 @@ class Codekind_manage_model extends MY_Model {
 		}
 		else
 		{
-			$sql = @"SELECT * FROM ".$table_name." ".$filter." ORDER BY code_key ASC, modi_time DESC LIMIT $dataStart, $dataLen";
+			$sql = @"SELECT * FROM ".$table_name." ".$filter." ORDER BY parent_id ,code_key ASC LIMIT $dataStart, $dataLen";
 		}
 	
 		$query = $this->db->query($sql);
 
+
+
 		if($query->num_rows() > 0)
 		{
+			$new_arr = array();
+			$new_result = array();
 			$result = $query->result();
 
-			return $result;
+			if($table_name != "mod_codekind"){
+
+				foreach ($result as $key => $value) {
+
+					$new_result[$value->code_id] = $result[$key];
+					
+				}
+
+
+				foreach ($result as $key => $value) {
+
+					$value->code_key = !empty($value->code_key)?$value->code_key:"0";
+
+					if($value->parent_id == -1){
+						$new_arr[$value->code_id."_-1"] = $result[$key];
+					}else{
+						$ppid = "";
+						if(isset($new_result[$value->parent_id]->parent_id) &&  $new_result[$value->parent_id]->parent_id != -1){
+							$value->code_name = "--".$value->code_name;
+							$ppid = $new_result[$value->parent_id]->parent_id."_".$value->parent_id."_";
+
+						}else{
+							$ppid = $value->parent_id."_";
+						}
+
+						$value->code_name = "--".$value->code_name;
+						$new_arr[$ppid.$value->code_id."_".$value->parent_id."_".$value->code_key] = $result[$key];
+					}
+					
+				}
+				ksort($new_arr);
+			}else{
+				$new_arr = $result;
+			}
+			
+
+
+
+	/*	echo "<pre>";
+		print_r($new_arr);
+		echo "</pre>";	
+
+		die();*/
+
+			return $new_arr;
 		}
 
 		return;
 	}
+
+
 
 	public function get_code_detail_by_parent_id($parent_id)
 	{

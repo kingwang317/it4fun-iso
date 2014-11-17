@@ -80,8 +80,7 @@
 							</label>
 						</th>
 						<th>編號</th>
-						<th>章節分類</th>
-						<th>章節代號</th>
+						<th style="width:5%">章節代號</th>
 						<th>主旨</th> 
 						<th>刪除</th>
 					</tr>
@@ -101,7 +100,6 @@
 							</label>
 						</td> 
 					    <td><?php echo $rows->id?></td>
-					    <td><?php echo $rows->code_name?></td>
 						<td><?php echo $rows->cp_key?></td>
 						<td><?php echo $rows->title?></td> 
 						<td>
