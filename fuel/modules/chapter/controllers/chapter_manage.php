@@ -37,6 +37,7 @@ class Chapter_manage extends Fuel_base_controller {
 		$filter .= $this->set_session('cp_key',$search_cp_key,'like'); 
 		$vars['search_cp_kind'] = $search_cp_kind; 
 		$vars['search_cp_key'] = $search_cp_key;  
+		echo $filter;
 		//列表基本設定
 		$target_url = $base_url.'fuel/'.$this->module_name.'/lists/'; 
 		$total_rows = $this->chapter_manage_model->get_count($filter);
@@ -253,7 +254,10 @@ class Chapter_manage extends Fuel_base_controller {
 	    	if ($op=="like") {
 	    		$filter = " AND $key like '%$value%' ";
 	    	}else 
+	    	{
+	    		$filter = " AND $key = '$value' ";
 				$this->session->set_userdata($key, $value);
+			}
 		}else{
 			// if (!isset($$value) ) {
 			// 	$value = $this->session->userdata($key); 

@@ -1,0 +1,58 @@
+@charset "utf-8";
+/* CSS Document */
+body ,ol ,ul ,li ,a ,img ,h1 ,h2 ,h3 ,h4 ,h5 ,i ,b ,dd ,tt ,input ,textarea {
+    font-family:Verdana,"微軟正黑體";
+    font-weight: bold;
+    text-decoration: none;
+    margin: 0px;
+    padding: 0px;
+    list-style-type: none;
+    border: none;
+    color: #000;
+    font-size: 14px;
+    outline:none;
+    resize:none;
+    height:100%; 
+    border:none;
+} 
+/* 主要css */
+body {}
+.main_width {width:100%;align:center;}
+.left {float:left;}
+.right {float:right;}
+.none {display:none;}
+
+#login {height:357px;width:311px;background:url(../images/login.png);position:absolute;right:0;top:40px;}
+#login .log_mv {width:204px;margin:61px auto 0 auto;position:relative;display:table;height:50px;}
+#login .log_mv .inp {width:170px;height:33px;margin-left:30px;background:none;color:white;}
+#login .log_mv .pass {margin-top:26px;}
+.check + label .ck_s {display:block;margin-top:25px;width:30px;height:28px;background:url(../images/s2.jpg) left top no-repeat;}
+.check:checked + label .ck_s {background:url(../images/s1.jpg);}
+#login .log_mv .check {display:none;}
+#login .log_mv #send {width:124px;height:36px;background:url(../images/btn1.jpg);margin:30px auto 0 auto;;display:block;}
+#login .close {width:50px;height:50px;position:absolute;top:10px;right:0;display:block;z-index:10;cursor:pointer;}
+#login .log_mv .sign {position:absolute;width:100%;bottom:-55px;text-align:center;color:white;text-decoration:underline;}
+
+#top {height:60px;background:#fe0000;display:table;}
+#top .logo {height:50px;display:block;margin:10px 0 0 35px;}
+#top .login {line-height:60px;display:block;color:white;margin-right:2em;}
+
+#nav ,#nav a {height:40px;line-height:40px;background:#3d3d3d;color:white;}
+#nav .nav_mv {margin-left:45px;}
+#nav a {margin:0 0.6em;}
+
+#visual {background:#c5ced3;max-height:500px;height:auto;}
+#visual img {max-width:1500px;max-height:500px;width:100%;display:block;margin:auto;}
+
+#content {height:auto;}
+.con_mv {max-width:1200px;width:100%;margin:10px auto;}
+.con_mv h1 {font-size:20px;line-height:35px;text-align:center;color:#333333;display:block;width:100%;height:auto;}
+.con_mv a {width:100%;display:inline-block;line-height:25px;color:#989898;margin:5px 0;font-size:16px;}
+.con_mv a:hover ,.box_right h2:hover {color:#27689f;}
+
+#foot {height:36px;line-height:36px;text-align:center;color:white;background:#878787;}
+/*  for IE8 */
+@media \0screen\,screen\9 {
+#login .log_mv label {display:none;}
+#login .log_mv .check {display:block;margin:25px 0 0 0;width:24px;height:24px;}
+}

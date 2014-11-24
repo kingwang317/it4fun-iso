@@ -51,6 +51,9 @@ class Home extends CI_Controller {
  		$chapter_list = $this->core_model->get_chapter_list_by_kind($chapter_detail[0]->cp_kind);
  		$vars['chapter_list'] = $chapter_list;
  		$vars['kind_name'] = $this->core_model->get_kind_name($chapter_detail[0]->cp_kind);
+ 		//echo $this->core_model->get_breadcrumb($chapter_detail[0]->cp_kind);
+ 		//die();
+ 		$vars['breadcrumb'] = $this->core_model->get_breadcrumb($chapter_detail[0]->cp_kind);
 		$vars['base_url'] = base_url();
 		$page_init = array('location' => 'detail');
 		// print_r($vars);

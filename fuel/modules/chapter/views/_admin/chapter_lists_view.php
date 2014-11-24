@@ -25,10 +25,11 @@
 				       <select name="search_cp_kind">
 				       		<option value="ALL">不拘</option>
 							<?php
+							//print_r($chapter);
 								if(isset($chapter)):
 							?>	
 							<?php   foreach($chapter as $key=>$rows):?>
-								<option value="<?php echo $rows->code_key ?>" <?php if (isset($search_cp_kind) && $search_cp_kind == $rows->code_key): ?>
+								<option value="<?php echo $rows->code_id ?>" <?php if (isset($search_cp_kind) && $search_cp_kind == $rows->code_id): ?>
 									selected
 								<?php endif ?>><?php echo $rows->code_name ?></option>
 							<?php endforeach;?>
