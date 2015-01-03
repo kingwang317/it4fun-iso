@@ -24,8 +24,7 @@ class Sample_manage extends Fuel_base_controller {
 	}
 	
 	function lists($dataStart=0)
-	{
-
+	{ 
 		//print_r($this->fuel_users_model->get_login_user_info());
 		$base_url = base_url();
 		//查詢條件資料
@@ -35,7 +34,7 @@ class Sample_manage extends Fuel_base_controller {
 		$search_cps_kind = $this->input->get_post('search_cps_kind');    
 		$search_cp_key = $this->input->get_post('search_cp_key'); 
 		$search_title = $this->input->get_post('search_title'); 
-		$filter = " WHERE 1=1 "; 
+		$filter = " WHERE 1=1 AND cps_kind <> '-1' "; 
 		if ("ALL" != $search_cps_kind) {
 			$filter .= $this->set_session('a.cps_kind',$search_cps_kind);
 		} 
@@ -67,15 +66,53 @@ class Sample_manage extends Fuel_base_controller {
 		$this->fuel->admin->render('_admin/'.$this->module_name.'_lists_view', $vars); 
 	}
 
+	function parse_lists($dataStart=0)
+	{ 
+		//print_r($this->fuel_users_model->get_login_user_info());
+		$base_url = base_url(); 
+		//查詢條件處理  
+		$search_cp_key = $this->input->get_post('search_cp_key'); 
+		$search_title = $this->input->get_post('search_title'); 
+		$filter = " WHERE 1=1 AND cps_kind = '-1' "; 
+		 
+		$filter .= $this->set_session('a.title',$search_title,'like'); 
+		$vars['search_cps_kind'] = '-1'; 
+		$vars['search_cp_key'] = $search_cp_key;  
+		$vars['search_title'] = $search_title; 
+		//列表基本設定
+		$target_url = $base_url.'fuel/parse/lists/'; 
+		$total_rows = $this->sample_manage_model->get_count($filter);
+		$config = $this->set_page->set_config($target_url, $total_rows, $dataStart, 20);
+		$dataLen = $config['per_page'];
+		$this->pagination->initialize($config);  
+		$results = $this->sample_manage_model->get_list($dataStart, $dataLen,$filter);  
+		$vars['total_rows'] = $total_rows; 
+		$vars['form_action'] = $base_url.'fuel/parse/lists';
+		$vars['form_method'] = 'POST';
+		$crumbs = array($this->module_uri => $this->module_name);
+		$this->fuel->admin->set_titlebar($crumbs); 
+		$vars['page_jump'] = $this->pagination->create_links();
+		$vars['create_url'] = $base_url.'fuel/parse/create?cps_kind=-1';
+		$vars['edit_url'] = $base_url.'fuel/parse/edit/';
+		$vars['del_url'] = $base_url.'fuel/parse/del/';
+		$vars['multi_del_url'] = $base_url.'fuel/parse/do_multi_del';
+		$vars['results'] = $results;
+		$vars['total_rows'] = $total_rows; 
+		$vars['CI'] = & get_instance(); 
+		$this->fuel->admin->render('_admin/parse_lists_view', $vars); 
+	}
+
  
 	function create()
 	{
 		//
 		$cp_key = $this->input->get_post("cp_key");
 		$cp_id = $this->input->get_post("cp_id");
+		$cps_kind = $this->input->get_post("cps_kind");
 		$vars['cp_key'] = $cp_key;
 		$vars['cp_id'] = $cp_id;
-		if ($cp_id != -1) { // 要產業類別 解析為-1
+		// $vars['cps_kind'] = $cps_kind;
+		if ($cps_kind != -1) { // 要產業類別 解析為-1
 			$industry = $this->codekind_manage_model->get_code_list_for_other_mod("INDUSTRY");
 			$vars['industry'] = $industry;
 		}
@@ -89,7 +126,12 @@ class Sample_manage extends Fuel_base_controller {
 		$this->fuel->admin->set_titlebar($crumbs);		 
 		$vars['module_uri'] = base_url().$this->module_uri;
 		$vars['view_name'] = "新增"; 
-		$this->fuel->admin->render('_admin/'.$this->module_name.'_create_view', $vars);
+		if ($cps_kind != -1) {
+			$this->fuel->admin->render('_admin/'.$this->module_name.'_create_view', $vars);
+		}else{
+			$this->fuel->admin->render('_admin/parse_create_view', $vars);
+		}
+		
 	}
 
 	function do_create()
@@ -117,9 +159,14 @@ class Sample_manage extends Fuel_base_controller {
 			 $post_arr["file_name"] = '';				 
 		} 
 		//新增動作處理
-		$success = $this->sample_manage_model->insert($post_arr); 
-		if($success)
+		$ID = $this->sample_manage_model->insert($post_arr);  
+		if($ID>0)
 		{
+			if ($post_arr["cps_kind"] != -1) {
+				$module_uri = base_url().'fuel/sample/edit/'.$ID; 
+			}else{ 
+				$module_uri = base_url().'fuel/parse/edit/'.$ID; 
+			}
 			$this->comm->plu_redirect($module_uri, 0, "新增成功");
 			die();
 		}
@@ -147,6 +194,7 @@ class Sample_manage extends Fuel_base_controller {
 			die;
 		}
 		//編輯頁面資料
+		// $vars['cp_id'] = $record->cp_id;
 		$industry = $this->codekind_manage_model->get_code_list_for_other_mod("INDUSTRY");
 		$vars['industry'] = $industry;
 		$chapter = $this->chapter_manage_model->get_chapter_list("");
@@ -159,12 +207,22 @@ class Sample_manage extends Fuel_base_controller {
 	    $vars['record'] = $record; 
 		$vars['module_uri'] = base_url().$this->module_uri; 
 		$vars["view_name"] = "修改";
-		$this->fuel->admin->render('_admin/'.$this->module_name.'_edit_view', $vars);
+		if ($record->cps_kind != -1) {
+			$this->fuel->admin->render('_admin/'.$this->module_name.'_edit_view', $vars);
+		}else{
+			$this->fuel->admin->render('_admin/parse_edit_view', $vars);
+		}
+		
 	}
 
 	function do_edit($id)
 	{ 
-		$module_uri = base_url().$this->module_uri;
+		if ($post_arr["cps_kind"] != -1) {
+			$module_uri = base_url().'fuel/sample/edit/'.$id;
+		}else{  
+			$module_uri = base_url().'fuel/parse/edit/'.$id;
+		}
+		 
 		//頁面POST資料
 		$post_arr = $this->input->post();
 		$post_arr['content'] = htmlspecialchars($this->input->get_post("content"));

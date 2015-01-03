@@ -37,7 +37,9 @@ class Chapter_manage extends Fuel_base_controller {
 		$filter .= $this->set_session('cp_key',$search_cp_key,'like'); 
 		$vars['search_cp_kind'] = $search_cp_kind; 
 		$vars['search_cp_key'] = $search_cp_key;  
-		echo $filter;
+		// echo $filter;
+		$super_admin = $this->fuel->auth->is_super_admin();
+			
 		//列表基本設定
 		$target_url = $base_url.'fuel/'.$this->module_name.'/lists/'; 
 		$total_rows = $this->chapter_manage_model->get_count($filter);
@@ -55,8 +57,10 @@ class Chapter_manage extends Fuel_base_controller {
 		$vars['edit_url'] = $base_url.'fuel/'.$this->module_name.'/edit/';
 		$vars['del_url'] = $base_url.'fuel/'.$this->module_name.'/del/';
 		$vars['sample_url'] = $base_url.'fuel/sample/create'; 
+		$vars['parse_url'] = $base_url.'fuel/parse/create'; 
 		$vars['multi_del_url'] = $base_url.'fuel/'.$this->module_name.'/do_multi_del';
 		$vars['results'] = $results;
+		$vars['super_admin'] = $super_admin;
 		$vars['total_rows'] = $total_rows; 
 		$vars['CI'] = & get_instance(); 
 		$this->fuel->admin->render('_admin/'.$this->module_name.'_lists_view', $vars); 
@@ -104,9 +108,10 @@ class Chapter_manage extends Fuel_base_controller {
 			 $post_arr["file_name"] = '';				 
 		} 
 		//新增動作處理
-		$success = $this->chapter_manage_model->insert($post_arr); 
-		if($success)
+		$ID = $this->chapter_manage_model->insert($post_arr);  
+		if($ID>0)
 		{
+			$module_uri = base_url().'fuel/chapter/edit/'.$ID; 
 			$this->comm->plu_redirect($module_uri, 0, "新增成功");
 			die();
 		}
@@ -149,7 +154,7 @@ class Chapter_manage extends Fuel_base_controller {
 
 	function do_edit($id)
 	{ 
-		$module_uri = base_url().$this->module_uri;
+		$module_uri = base_url().'fuel/chapter/edit/'.$id; 
 		//頁面POST資料
 		$post_arr = $this->input->post();
 		$post_arr['description'] = htmlspecialchars($this->input->get_post("description"));

@@ -672,7 +672,11 @@ class Fuel_users_model extends Base_module_model {
 	}
 
 	public function get_login_user_info(){
-		return $this->user_info($this->fuel->auth->valid_user()['id']);
+		$valid_user = $this->fuel->auth->valid_user();
+		// if ((isset($values['id']) AND $valid_user['id'] == $values['id']) AND (isset($values['active']) AND $values['active'] == 'no'))
+		// {
+		// }
+		return $this->user_info($valid_user['id']);
 	}
 
 }

@@ -104,8 +104,12 @@
 						<td><?php echo $rows->cp_key?></td>
 						<td><?php echo $rows->title?></td> 
 						<td>
-							<button class="btn btn-xs btn-primary" type="button" onclick="aHover('<?php echo $edit_url.$rows->id?>')" >原文</button> 
-							<button class="btn btn-xs btn-warning" type="button" onclick="aHover('<?php echo $sample_url."?cp_id=-1&cp_key=".$rows->cp_key; ?>')" >解析</button>
+							<?php if ($super_admin): ?>								
+								<button class="btn btn-xs btn-primary" type="button" onclick="aHover('<?php echo $edit_url.$rows->id?>')" >原文</button> 
+							<?php endif ?>
+							<!-- <button class="btn btn-xs btn-warning" type="button" onclick="aHover('<?php echo $sample_url."?cp_id=-1&cp_key=".$rows->cp_key; ?>')" >解析</button>
+							<button class="btn btn-xs btn-info" type="button" onclick="aHover('<?php echo $parse_url."&cp_key=".$rows->cp_key; ?>')" >範例</button> -->
+							<button class="btn btn-xs btn-warning" type="button" onclick="aHover('<?php echo $parse_url."?cp_id=".$rows->id."&cps_kind=-1&cp_key=".$rows->cp_key; ?>')" >解析</button>
 							<button class="btn btn-xs btn-info" type="button" onclick="aHover('<?php echo $sample_url."?cp_id=".$rows->id."&cp_key=".$rows->cp_key; ?>')" >範例</button>
 							<button class="btn btn-xs btn-default" type="button" onclick="aHover('<?php echo $edit_url.$rows->id?>')" >撰寫</button>
 							<button class="btn btn-xs btn-danger del" type="button" onclick="dialog_chk('<?php echo $rows->id?>')">刪除</button>

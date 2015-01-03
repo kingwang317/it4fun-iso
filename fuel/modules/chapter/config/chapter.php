@@ -6,7 +6,8 @@
 */
 $config['nav']['chapter'] = array(
 'chapter/lists'		=> '全文列表', 
-'sample/lists'		=> '    - 範例'
+'sample/lists'		=> '    - 範例',
+'parse/lists'		=> '    - 解析'
 );
 
 // deterines whether to use this configuration below or the database for controlling the blogs behavior

@@ -85,7 +85,7 @@ class Sample_manage_model extends MY_Model {
 
 		if($success)
 		{
-			return true;
+			return $this->db->query("SELECT LAST_INSERT_ID() AS ID")->row()->ID;
 		}
 
 		return;
