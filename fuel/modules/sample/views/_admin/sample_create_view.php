@@ -61,7 +61,7 @@
 						<div class="form-group">
 							<label class="col-sm-2 col-sm-2 control-label">範例內容</label>
 							<div class="col-sm-8"> 
-								<textarea class="form-control" rows="10" name="content" id="content"></textarea>
+								<textarea class="ckeditor" rows="10" name="content" id="content"></textarea>
 							</div>
 						</div>	 				  
 						<div class="form-group">
@@ -110,21 +110,6 @@
 
 	    $("#cp_key").trigger('blur');
 
-	    var config =
-            {
-                height: 380,
-                width: 850,
-                linkShowAdvancedTab: false,
-                scayt_autoStartup: false,
-                enterMode: Number(2),
-                toolbar_Full: [
-                				[ 'Styles', 'Format', 'Font', 'FontSize', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ],
-                				['Bold', 'Italic', 'Underline', '-', 'NumberedList', 'BulletedList'],
-                                ['Link', 'Unlink'], ['Undo', 'Redo', '-', 'SelectAll'], [ 'TextColor', 'BGColor' ],['Checkbox', 'Radio', 'Image' ], ['Source']
-                              ]
-
-            };
-		$( 'textarea#content' ).ckeditor(config);
 
 	});
 </script>
