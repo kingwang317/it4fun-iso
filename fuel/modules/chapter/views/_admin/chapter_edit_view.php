@@ -56,7 +56,7 @@
 								<textarea class="ckeditor" rows="10" name="description" id="description"><?php echo htmlspecialchars_decode($record->description); ?></textarea>
 							</div>
 						</div>	
-						<div class="form-group">
+						<div class="form-group" style="display:none">
 							<label class="col-sm-2 col-sm-2 control-label">解析</label>
 							<div class="col-sm-8"> 
 								<textarea class="ckeditor" rows="10" name="parse" id="parse"><?php echo htmlspecialchars_decode($record->parse); ?></textarea>
@@ -72,7 +72,7 @@
 						</div>	
 						<div class="form-group">
 							<div class="col-sm-12" style="text-align:center">
-								<button type="submit" class="btn btn-info">更新</button>
+								<button type="submit" class="btn btn-info">儲存</button>
 								<button type="button" class="btn btn-danger" onClick="aHover('<?php echo $module_uri?>')">取消</button>
 							</div>
 						</div>

@@ -70,7 +70,7 @@
 						</div> -->
 						<div class="form-group">
 							<div class="col-sm-12" style="text-align:center">
-								<button type="submit" class="btn btn-info">修改</button>
+								<button type="submit" class="btn btn-info">儲存</button>
 								<button type="button" class="btn btn-danger" onClick="aHover('<?php echo $module_uri?>')">取消</button>
 							</div>
 						</div>

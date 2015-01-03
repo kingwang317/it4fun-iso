@@ -5,8 +5,8 @@
 |--------------------------------------------------------------------------
 */
 $config['nav']['chapter'] = array(
-'chapter/lists'		=> '章節管理', 
-'sample/lists'		=> '範例管理'
+'chapter/lists'		=> '全文列表', 
+'sample/lists'		=> '    - 範例'
 );
 
 // deterines whether to use this configuration below or the database for controlling the blogs behavior
