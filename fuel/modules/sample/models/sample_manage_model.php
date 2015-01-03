@@ -69,17 +69,18 @@ class Sample_manage_model extends MY_Model {
 											title, 
 											`cp_id`, 
 											content,
-											file_name
-										 
+											file_name,
+										 	create_by
 										) 
-				VALUES ( ?, ?, ?, ?, ?)"; 
+				VALUES ( ?, ?, ?, ?, ? ,? )"; 
 
 		$para = array(
 				$insert_data['cps_kind'], 
 				$insert_data['title'],
 				$insert_data['cp_id'],
 				$insert_data['content'],
-				$insert_data['file_name']
+				$insert_data['file_name'],
+				$insert_data['create_by']
 			);
 		$success = $this->db->query($sql, $para);
 

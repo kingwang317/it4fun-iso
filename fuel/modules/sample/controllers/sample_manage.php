@@ -68,7 +68,7 @@ class Sample_manage extends Fuel_base_controller {
 
 	function parse_lists($dataStart=0)
 	{ 
-		//print_r($this->fuel_users_model->get_login_user_info());
+		print_r($this->fuel_users_model->get_login_user_info());
 		$base_url = base_url(); 
 		//查詢條件處理  
 		$search_cp_key = $this->input->get_post('search_cp_key'); 
@@ -140,6 +140,8 @@ class Sample_manage extends Fuel_base_controller {
 		//頁面POST資料
 		$post_arr = $this->input->post();
 		$post_arr['content'] = htmlspecialchars($this->input->get_post("content"));
+		$user_info = $this->fuel_users_model->get_login_user_info();
+		$post_arr['create_by'] = $user_info['user_name'];
 		//上傳檔案處理
 		$root_path = assets_server_path('sample_img/'.$post_arr['cps_kind']."/".$post_arr['cp_key']."/");
 		if (!file_exists($root_path)) {

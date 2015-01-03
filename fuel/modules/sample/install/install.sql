@@ -24,3 +24,6 @@ CREATE TABLE `mod_code` (
   `lang_code` varchar(5) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+ALTER TABLE  `mod_cp_sample` ADD  `create_by` VARCHAR( 50 ) NOT NULL
