@@ -20,21 +20,25 @@
 					<?php echo $view_name?>
 				</header>
 				<div class="panel-body">
-					<div class="form-horizontal tasi-form">		 
-						<div class="form-group">
-							<label class="col-sm-2 col-sm-2 control-label">範例分類</label>
-							<div class="col-sm-4">
-								<select name="cps_kind">
-									<?php
-										if(isset($industry)):
-									?>	
-									<?php   foreach($industry as $key=>$rows):?>
-												<option value="<?php echo $rows->code_id ?>"><?php echo $rows->code_name ?></option>
-										<?php endforeach;?>
-									<?php endif;?>
-								</select>
-							</div>
-						</div>	   
+					<div class="form-horizontal tasi-form">	
+						<?php if ($cp_id != -1): ?>		   	 
+							<div class="form-group">
+								<label class="col-sm-2 col-sm-2 control-label">範例分類</label>
+								<div class="col-sm-4">
+									<select name="cps_kind">
+										<?php
+											if(isset($industry)):
+										?>	
+										<?php   foreach($industry as $key=>$rows):?>
+													<option value="<?php echo $rows->code_id ?>"><?php echo $rows->code_name ?></option>
+											<?php endforeach;?>
+										<?php endif;?>
+									</select>
+								</div>
+							</div>	
+						<?php else: ?>  
+							<input type="hidden" value="-1" name="cps_kind" />
+						<?php endif ?> 
 						<div class="form-group">
 							<label class="col-sm-2 col-sm-2 control-label">對應章節</label>
 							<div class="col-sm-4"> 

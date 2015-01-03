@@ -91,7 +91,7 @@
 						<th>範例分類</th>
 						<th>對應章節</th>
 						<th>主旨</th> 
-						<th>刪除</th>
+						<th>編輯</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -113,7 +113,7 @@
 						<td><?php echo $rows->cp_key." ".$rows->cp_title?></td>
 						<td><?php echo $rows->title?></td> 
 						<td>
-							<button class="btn btn-xs btn-primary" type="button" onclick="aHover('<?php echo $edit_url.$rows->id?>')" >更新</button>
+							<button class="btn btn-xs btn-primary" type="button" onclick="aHover('<?php echo $edit_url.$rows->id?>')" >修改</button>
 							<button class="btn btn-xs btn-danger del" type="button" onclick="dialog_chk('<?php echo $rows->id?>')">刪除</button>
 						</td>
 					</tr>
