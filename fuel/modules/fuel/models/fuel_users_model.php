@@ -671,6 +671,10 @@ class Fuel_users_model extends Base_module_model {
 		
 	}
 
+	public function get_login_user_info(){
+		return $this->user_info($this->fuel->auth->valid_user()['id']);
+	}
+
 }
 
 class Fuel_user_model extends Base_module_record {
