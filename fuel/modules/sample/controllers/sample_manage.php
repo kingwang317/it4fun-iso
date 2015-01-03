@@ -15,6 +15,7 @@ class Sample_manage extends Fuel_base_controller {
 		$this->load->module_model(SAMPLE_FOLDER, 'sample_manage_model');
 		$this->load->module_model(CODEKIND_FOLDER, 'codekind_manage_model');
 		$this->load->module_model(CHAPTER_FOLDER, 'chapter_manage_model');
+		$this->load->module_model(FUEL_FOLDER, 'fuel_users_model');
 		$this->load->helper('ajax');
 		$this->load->library('pagination');
 		$this->load->library('set_page');
@@ -24,6 +25,8 @@ class Sample_manage extends Fuel_base_controller {
 	
 	function lists($dataStart=0)
 	{
+
+		//print_r($this->fuel_users_model->get_login_user_info());
 		$base_url = base_url();
 		//查詢條件資料
 		$industry = $this->codekind_manage_model->get_code_list_for_other_mod("INDUSTRY",false);  
