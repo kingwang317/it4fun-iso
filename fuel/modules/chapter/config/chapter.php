@@ -25,8 +25,8 @@ $config['chapter_javascript'] = array(
 );
 
 $config['chapter_ck_javascript'] = array(
-    site_url().'assets/admin_js/ckeditor.js',
-    site_url().'assets/admin_js/adapters/jquery.js',  
+    site_url().'assets/admin_js/ckeditor/ckeditor.js',
+	site_url().'assets/admin_js/ckfinder/ckfinder.js'
 );
 
 $config['chapter_css'] = array(

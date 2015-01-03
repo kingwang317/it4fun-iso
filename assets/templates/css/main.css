@@ -56,3 +56,9 @@ body {}
 #login .log_mv label {display:none;}
 #login .log_mv .check {display:block;margin:25px 0 0 0;width:24px;height:24px;}
 }
+.login_name{
+  line-height: 60px;
+  display: block;
+  color: white;
+  margin-right: 2em;
+}

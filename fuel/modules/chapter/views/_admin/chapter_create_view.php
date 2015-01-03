@@ -51,13 +51,13 @@
 						<div class="form-group">
 							<label class="col-sm-2 col-sm-2 control-label">原文</label>
 							<div class="col-sm-8"> 
-								<textarea class="form-control" rows="10" name="description" id="description"></textarea>
+								<textarea class="ckeditor" rows="10" name="description" id="description"></textarea>
 							</div>
 						</div>	
 						<div class="form-group">
 							<label class="col-sm-2 col-sm-2 control-label">解析</label>
 							<div class="col-sm-8"> 
-								<textarea class="form-control" rows="10" name="parse" id="parse"></textarea>
+								<textarea class="ckeditor" rows="10" name="parse" id="parse"></textarea>
 							</div>
 						</div>						  
 						<div class="form-group">
@@ -89,24 +89,5 @@
 		location.href = url;
 	}
 
-	jQuery(document).ready(function($) {
-	 
-		var config =
-            {
-                height: 380,
-                width: 850,
-                linkShowAdvancedTab: false,
-                scayt_autoStartup: false,
-                enterMode: Number(2),
-                toolbar_Full: [
-                				[ 'Styles', 'Format', 'Font', 'FontSize', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ],
-                				['Bold', 'Italic', 'Underline', '-', 'NumberedList', 'BulletedList'],
-                                ['Link', 'Unlink'], ['Undo', 'Redo', '-', 'SelectAll'], [ 'TextColor', 'BGColor' ],['Checkbox', 'Radio', 'Image' ], ['Source']
-                              ]
-
-            };
-		$( 'textarea#description' ).ckeditor(config);
-		$( 'textarea#parse' ).ckeditor(config);
-
-	});
+	
 </script>
