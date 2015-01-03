@@ -9,12 +9,12 @@
 <link href="<?php echo site_url() ?>assets/templates/css/main.css" rel="stylesheet" type="text/css" />
 <!--link font awesome to use the icon-->
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+<link rel="shortcut icon" type="image/png" href="<?php echo site_url() ?>assets/templates/images/iso_icon.png"/>
 <script type="text/javascript" src="<?php echo site_url() ?>assets/templates/js/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="<?php echo site_url() ?>assets/templates/js/jqueryUI-1.11.1.js"></script>
 <style>
 .sub{
     width:90%;
-    max-width:1200px;
     margin: 5px 75px;
 }
 
@@ -26,10 +26,10 @@
     display:inline-block;
     vertical-align:top;
 }
-.left_title{
+.title{
     font-size:20px;
     line-height:30px;
-    margin:5px 0 20px 5px;
+    margin:20px 450px 20px 5px;
 
 }
 .tag_list{
@@ -62,7 +62,7 @@
     margin:5px 0 10px 0;
     border-top:solid 1px #ccc;
     padding-top:10px;
-    line-height:35px;
+    line-height:25px;
 }
 .content_title{
     font-size:20px;
@@ -101,12 +101,16 @@
     font-size:15px;
     padding:0 20px 0 20px;
 }
+li{
+      list-style-type: disc;
+      margin-left: 40px;
+}
 /*left side css - END*/
 
 /*right side css*/
 .sub_right{
     min-width:200px;
-    margin:200px 0px 20px 20px;
+    margin:55px 0px 20px 20px;
     padding:20px;
     font-size:18px;
     width:20%;
@@ -157,8 +161,9 @@ You are in <a href="<?php echo site_url() ?> ">首頁</a>
 
 <!-- 中間內容區 ↓ -->
 <div class="sub">
+    <div class="title"><?php echo $chapter_detail[0]->cp_key?>：<?php echo  $chapter_detail[0]->title?></div>
     <div class="sub_left">
-        <div class="left_title"><?php echo $chapter_detail[0]->cp_key?>：<?php echo  $chapter_detail[0]->title?></div>
+        
         <div class="tag_list">
             <div id="content1" class="tag tag_click">原文</div>
             <div id="content2" class="tag">解析</div>

@@ -7,7 +7,7 @@ class Core_model extends CI_Model {
     }
 
     public function get_cate_list(){
-        $get_root_cate_sql = @" SELECT * FROM mod_code WHERE codekind_key = 'CHAPTER' AND parent_id = '-1' ";
+        $get_root_cate_sql = @" SELECT * FROM mod_code WHERE codekind_key = 'CHAPTER' AND parent_id = '-1' ORDER BY code_key ASC";
         $query = $this->db->query($get_root_cate_sql);
         //echo $sql;exit;
         if($query->num_rows() > 0)
@@ -40,7 +40,7 @@ class Core_model extends CI_Model {
             $result[$key]->chapters = $chapter_result;
 
 
-            $get_pcate_sql = @" SELECT * FROM mod_code WHERE codekind_key = 'CHAPTER' AND parent_id = '$value->code_id' ";
+            $get_pcate_sql = @" SELECT * FROM mod_code WHERE codekind_key = 'CHAPTER' AND parent_id = '$value->code_id' ORDER BY code_key ASC ";
             $query = $this->db->query($get_pcate_sql);
             
             if($query->num_rows() > 0)
@@ -115,9 +115,9 @@ class Core_model extends CI_Model {
             //print_r($result);
 
             if($result[0]->parent_id != -1 ){
-                return '&gt;'.$result[0]->code_name.$this->get_breadcrumb($result[0]->parent_id);
+                return ' &gt; '.$result[0]->code_name.$this->get_breadcrumb($result[0]->parent_id);
             }else{
-                return '&gt;'.$result[0]->code_name;
+                return ' &gt; '.$result[0]->code_name;
             }
            // print_r($result);
             

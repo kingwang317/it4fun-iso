@@ -10,6 +10,7 @@
 <link href="<?php echo site_url() ?>assets/templates/css/main.css" rel="stylesheet" type="text/css" />
 <!--link font awesome to use the icon-->
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+<link rel="shortcut icon" type="image/png" href="<?php echo site_url() ?>assets/templates/images/iso_icon.png"/>
 <script type="text/javascript" src="<?php echo site_url() ?>assets/templates/js/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="<?php echo site_url() ?>assets/templates/js/jqueryUI-1.11.1.js"></script>
 <style type="text/css">
@@ -169,7 +170,7 @@ foreach ($index_list as $key => $root_value) {
 
             ?>
 
-            <div class="detail_link" onClick="location.href = '<?php echo site_url()."/home/detail?id=$sub_chapter_value->id" ?>';" ><i class="fa fa-file-text-o"></i><?php echo $third_chapter_value->cp_key ?></div>
+            <div class="detail_link" onClick="location.href = '<?php echo site_url()."/home/detail?id=$third_chapter_value->id" ?>';" ><i class="fa fa-file-text-o"></i><?php echo $third_chapter_value->cp_key ?></div>
             
             <?php 
 

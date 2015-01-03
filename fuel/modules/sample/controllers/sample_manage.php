@@ -26,7 +26,7 @@ class Sample_manage extends Fuel_base_controller {
 	{
 		$base_url = base_url();
 		//查詢條件資料
-		$industry = $this->codekind_manage_model->get_code_list_for_other_mod("INDUSTRY");  
+		$industry = $this->codekind_manage_model->get_code_list_for_other_mod("INDUSTRY",false);  
 		$vars['industry'] = $industry;  
 		//查詢條件處理
 		$search_cps_kind = $this->input->get_post('search_cps_kind');    
