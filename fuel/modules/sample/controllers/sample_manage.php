@@ -68,7 +68,7 @@ class Sample_manage extends Fuel_base_controller {
 
 	function parse_lists($dataStart=0)
 	{ 
-		print_r($this->fuel_users_model->get_login_user_info());
+		// print_r($this->fuel_users_model->get_login_user_info());
 		$base_url = base_url(); 
 		//查詢條件處理  
 		$search_cp_key = $this->input->get_post('search_cp_key'); 

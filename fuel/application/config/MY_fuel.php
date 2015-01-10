@@ -26,7 +26,9 @@ $config['modules_allowed'] = array(
 	'user_guide', 
 	'codekind', 
 	'chapter',
-	'sample'
+	'sample',
+	'cpinput'
+	// 'chapter2'
 );
 
 $config['dashboards'] = array('google_analytics');
