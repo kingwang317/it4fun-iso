@@ -11,7 +11,7 @@ class Cpinput_manage extends Fuel_base_controller {
 	function __construct()
 	{
 		parent::__construct();
-		// $this->_validate_user('cpinput');
+		 $this->_validate_user('cpinput/manage');
 		$this->load->module_model(CPINPUT_FOLDER, 'cpinput_manage_model');
 		$this->load->module_model(CODEKIND_FOLDER, 'codekind_manage_model');
 		$this->load->helper('ajax');
@@ -23,7 +23,7 @@ class Cpinput_manage extends Fuel_base_controller {
 	
 	function lists($dataStart=0)
 	{
-		die;
+		//die;
 		$base_url = base_url();
 		//查詢條件資料
 		$chapter = $this->codekind_manage_model->get_code_list_for_other_mod("CHAPTER",false);  
