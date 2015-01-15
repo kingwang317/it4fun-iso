@@ -1,4 +1,4 @@
-<?php echo css($this->config->item('sample_css'), 'sample')?> 
+<?php echo css($this->config->item('cpinput_css'), 'cpinput')?> 
 
 <section class="main-content">
 <section class="wrapper" style="margin:0px">
@@ -17,24 +17,7 @@
  
 	    <div class="col-md-12 sheader"> 
 			<div class="form-inline" style="margin-top:10px">
-				<div class="form-group">
-					<label class="col-sm-4 control-label" >
-						範例分類
-					</label>
-				    <div class="col-sm-8">				   
-				       <select name="search_cps_kind">
-				       		<option value="ALL">不拘</option>
-							<?php
-								if(isset($industry)):
-							?>	
-							<?php   foreach($industry as $key=>$rows):?>
-								<option value="<?php echo $rows->code_key ?>" <?php if (isset($search_cps_kind) && $search_cps_kind == $rows->code_id): ?>
-									selected
-								<?php endif ?>><?php echo $rows->code_name ?></option>
-							<?php endforeach;?>
-							<?php endif;?>
-						</select>
-				    </div>
+				<div class="form-group">					 
 				    <label class="col-sm-4 control-label" >
 						章節代號
 					</label>
@@ -88,9 +71,9 @@
 							</label>
 						</th>
 						<th>編號</th>
-						<th>範例分類</th>
 						<th>對應章節</th>
 						<th>主旨</th> 
+						<th>版本</th> 
 						<th>編輯</th>
 					</tr>
 				</thead>
@@ -109,12 +92,20 @@
 							</label>
 						</td> 
 					    <td><?php echo $rows->id?></td>
-					    <td><?php echo $rows->code_name?></td>
 						<td><?php echo $rows->cp_key." ".$rows->cp_title?></td>
 						<td><?php echo $rows->title?></td> 
-						<td>
-							<button class="btn btn-xs btn-primary" type="button" onclick="aHover('<?php echo $edit_url.$rows->id?>')" >修改</button>
-							<button class="btn btn-xs btn-danger del" type="button" onclick="dialog_chk('<?php echo $rows->id?>')">刪除</button>
+						<td><?php echo $rows->version?></td> 
+						<td>							
+							<?php if (isset($rows->verify_by) && !empty($rows->verify_by)): ?>
+								<button class="btn btn-xs btn-danger" type="button" onclick="aHover('<?php echo $detail_url.$rows->id?>')" >已通過審核</button>
+							<?php else: ?>
+								<?php if ($is_verify_admin == 'YES'): ?>
+									<button class="btn btn-xs btn-info" type="button" onclick="aHover('<?php echo $verify_url.$rows->id?>')" >審核</button>
+								<?php endif ?>
+								<button class="btn btn-xs btn-primary" type="button" onclick="aHover('<?php echo $edit_url.$rows->id?>')" >修改</button>
+							<?php endif ?>
+							
+							<!-- <button class="btn btn-xs btn-danger del" type="button" onclick="dialog_chk('<?php echo $rows->id?>')">刪除</button> -->
 						</td>
 					</tr>
 					<?php
@@ -140,7 +131,7 @@
 	</div>
 </section>
 </section>
-<?php echo js($this->config->item('sample_javascript'), 'sample')?>
+<?php echo js($this->config->item('cpinput_javascript'), 'cpinput')?>
 <script>
 	var $j = jQuery.noConflict(true);
 

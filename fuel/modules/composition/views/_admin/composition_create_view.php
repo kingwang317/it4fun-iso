@@ -1,4 +1,5 @@
-<?php echo css($this->config->item('sample_css'), 'sample')?>  
+<?php echo css($this->config->item('chapter_css'), 'chapter')?> 
+
 <section class="wrapper" style="margin:0px">
 	<div class="row" style="margin:10px 10px">
 	    <div class="col-md-2 sheader"><h4>新增</h4></div>
@@ -8,7 +9,7 @@
 	<div class="row" style="margin:10px 10px">
 		<div class="span12">
 			<ul class="breadcrumb">
-			  <li>位置：<a href="<?php echo $module_uri?>">解析管理</a></li>
+			  <li>位置：<a href="<?php echo $module_uri?>">章節管理</a></li>
 			  <li class="active"><?php echo $view_name?></li>
 			</ul>
 		</div>
@@ -20,25 +21,27 @@
 					<?php echo $view_name?>
 				</header>
 				<div class="panel-body">
-					<div class="form-horizontal tasi-form">	
-						<input type="hidden" value="-1" name="cps_kind" />
+					<div class="form-horizontal tasi-form">		 
 						<div class="form-group">
-							<label class="col-sm-2 col-sm-2 control-label">對應章節</label>
-							<div class="col-sm-4"> 
-								<input type="text" class="form-control" name="cp_key" id="cp_key" <?php if (isset($cp_key)): ?>
-									value="<?php echo $cp_key ?>"
-								<?php endif ?> >  
-								<select name="cp_id" id="cp_id" >
+							<label class="col-sm-2 col-sm-2 control-label">章節分類</label>
+							<div class="col-sm-4">
+								<select name="cp_kind">
 									<?php
 										if(isset($chapter)):
 									?>	
 									<?php   foreach($chapter as $key=>$rows):?>
-												<option value="<?php echo $rows->id ?>"><?php echo $rows->cp_key." ".$rows->title ?></option>
+												<option value="<?php echo $rows->code_id ?>"><?php echo $rows->code_name ?></option>
 										<?php endforeach;?>
 									<?php endif;?>
-								</select> 
+								</select>
 							</div>
-						</div>	     
+						</div>	
+						<div class="form-group">
+							<label class="col-sm-2 col-sm-2 control-label">章節代號</label>
+							<div class="col-sm-4">
+								<input type="text" class="form-control" name="cp_key" value=""> 
+							</div>
+						</div>    
 						<div class="form-group">
 							<label class="col-sm-2 col-sm-2 control-label">主旨</label>
 							<div class="col-sm-4">
@@ -46,11 +49,17 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-2 col-sm-2 control-label">解析內容</label>
+							<label class="col-sm-2 col-sm-2 control-label">原文</label>
 							<div class="col-sm-8"> 
-								<textarea class="ckeditor form-control" rows="10" name="content" id="content"></textarea>
+								<textarea class="ckeditor" rows="10" name="description" id="description"></textarea>
 							</div>
-						</div>	 				  
+						</div>	
+						<div class="form-group" style="display:none">
+							<label class="col-sm-2 col-sm-2 control-label">解析</label>
+							<div class="col-sm-8"> 
+								<textarea class="ckeditor" rows="10" name="parse" id="parse"></textarea>
+							</div>
+						</div>						  
 						<div class="form-group">
 							<label class="col-sm-2 col-sm-2 control-label">檔案</label>
 							<div class="col-sm-4">
@@ -71,33 +80,14 @@
 
 </section>
 
-<?php echo js($this->config->item('sample_javascript'), 'sample')?>
-<?php echo js($this->config->item('sample_ck_javascript'), 'sample')?>
+<?php echo js($this->config->item('chapter_javascript'), 'chapter')?>
+<?php echo js($this->config->item('chapter_ck_javascript'), 'chapter')?>
  
 <script>
 	function aHover(url)
 	{
 		location.href = url;
 	}
- 
 
-	jQuery(document).ready(function($) {
-	 
-	    $("#cp_key").blur(function() {
-	     
-	        $("#cp_id option:contains('" + $(this).val() + "')").attr("selected", true);
-	    });
-
-	    $("#cp_id").change(function() { 
-	    	// console.log($(this).find("option:selected").text()); 
-	    	var selectedValue = $(this).find("option:selected").text();
-	    	var ary = selectedValue.split(" ");
-	    	$("#cp_key").val(ary[0]);
-	    })
-
-	    $("#cp_key").trigger('blur');
-
-	    
-
-	});
+	
 </script>

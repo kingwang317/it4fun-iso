@@ -13,8 +13,7 @@ class Cpinput_manage_model extends MY_Model {
 	public function get_count($filter="")
 	{
 		$sql = @"SELECT COUNT(*) AS total_rows FROM mod_cp_input a 
-		LEFT JOIN mod_code b on a.cps_kind = b.code_id
-		LEFT JOIN mod_chapter c on a.cp_id = c.id $filter ";
+		LEFT JOIN mod_chapter b on a.cp_id = b.id $filter ";
 		$query = $this->db->query($sql);
 
 		if($query->num_rows() > 0)
@@ -29,10 +28,11 @@ class Cpinput_manage_model extends MY_Model {
 
 	public function get_list($dataStart, $dataLen, $filter)
 	{
-		$sql = @"SELECT a.*,b.code_name,c.title AS cp_title,c.cp_key FROM mod_cp_input a 
-		LEFT JOIN mod_code b on a.cps_kind = b.code_id
-		LEFT JOIN mod_chapter c on a.cp_id = c.id
-		$filter ORDER BY `cps_kind` LIMIT $dataStart, $dataLen";
+		$sql = @"SELECT * FROM (
+		SELECT a.*,b.title AS cp_title,b.cp_key FROM mod_cp_input a  
+		LEFT JOIN mod_chapter b on a.cp_id = b.id
+		$filter ORDER BY `author`,`input_key` ASC , `version` DESC  LIMIT $dataStart, $dataLen ) x
+		GROUP BY `author`,`input_key`;";
 	
 		$query = $this->db->query($sql);
 
@@ -62,25 +62,28 @@ class Cpinput_manage_model extends MY_Model {
 	}
  
 
-	public function insert($insert_data)
+	public function insert($insert_data,$version=1)
 	{
 		$sql = @"INSERT INTO mod_cp_input ( 
-											cps_kind,
+											input_key,
+											cp_id,
 											title, 
-											`cp_id`, 
 											content,
 											file_name,
-										 	create_by
+											author, 
+										 	create_date,
+										 	version
 										) 
-				VALUES ( ?, ?, ?, ?, ? ,? )"; 
+				VALUES ( ?, ?, ?, ?, ?, ? , NOW(),?)"; 
 
 		$para = array(
-				$insert_data['cps_kind'], 
+				$insert_data['input_key'], 
+				$insert_data['cp_id'], 
 				$insert_data['title'],
-				$insert_data['cp_id'],
 				$insert_data['content'],
 				$insert_data['file_name'],
-				$insert_data['create_by']
+				$insert_data['author'],
+				$version
 			);
 		$success = $this->db->query($sql, $para);
 
@@ -92,24 +95,47 @@ class Cpinput_manage_model extends MY_Model {
 		return;
 	}
 
-	public function update($update_data)
-	{
-		$sql = @"UPDATE mod_cp_input SET `cps_kind` 	= ?,
-										title 	= ?,
-										`cp_id` 	= ?,
-										content = ?, 
-										file_name	= ?
+	public function verify($update_data){
+		$sql = @"UPDATE mod_cp_input SET  
+										verify_by = ?, 
+										verify_date	= NOW()
 									 
 				WHERE id = ?";
 		$para = array(
-				$update_data['cps_kind'], 
-				$update_data['title'],
-				$update_data['cp_id'],
-				$update_data['content'],
-				$update_data['file_name'], 
+				$update_data['verify_by'],  
 				$update_data['id']
 			);
 		$success = $this->db->query($sql, $para);
+ 
+		 
+		if($success)
+		{
+			return true;
+		}
+
+		return;
+	}
+
+	public function update($update_data)
+	{
+		$sql = @"SELECT MAX(version)+1 AS version FROM  mod_cp_input  WHERE input_key= ?";
+
+		$para = array(
+				$update_data['input_key']
+			);
+
+		$query = $this->db->query($sql,$para);
+
+		$version = 1;
+
+		if($query->num_rows() > 0)
+		{
+			$row = $query->row();
+
+			$version = $row->version;
+		}
+
+		$success = $this->insert($update_data,$version);
  
 		 
 		if($success)

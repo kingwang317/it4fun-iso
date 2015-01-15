@@ -9,7 +9,7 @@
 	<div class="row">
 		<div class="span12">
 			<ul class="breadcrumb">
-			  <li>位置：範例管理</li>
+			  <li>位置：解析管理</li>
 			</ul>
 		</div>
 	</div> 

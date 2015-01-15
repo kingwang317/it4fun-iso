@@ -8,7 +8,7 @@
 	<div class="row" style="margin:10px 10px">
 		<div class="span12">
 			<ul class="breadcrumb">
-			  <li>位置：<a href="<?php echo $module_uri?>">範例管理</a></li>
+			  <li>位置：<a href="<?php echo $module_uri?>">撰寫管理</a></li>
 			  <li class="active"><?php echo $view_name?></li>
 			</ul>
 		</div>
@@ -20,21 +20,8 @@
 					<?php echo $view_name?>
 				</header>
 				<div class="panel-body">
-					<div class="form-horizontal tasi-form">							   	 
-						<div class="form-group">
-							<label class="col-sm-2 col-sm-2 control-label">範例分類</label>
-							<div class="col-sm-4">
-								<select name="cps_kind">
-									<?php
-										if(isset($industry)):
-									?>	
-									<?php   foreach($industry as $key=>$rows):?>
-												<option value="<?php echo $rows->code_id ?>"><?php echo $rows->code_name ?></option>
-										<?php endforeach;?>
-									<?php endif;?>
-								</select>
-							</div>
-						</div>						
+					<div class="form-horizontal tasi-form">						   	 
+						 			
 						<div class="form-group">
 							<label class="col-sm-2 col-sm-2 control-label">對應章節</label>
 							<div class="col-sm-4"> 
@@ -59,7 +46,7 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-2 col-sm-2 control-label">範例內容</label>
+							<label class="col-sm-2 col-sm-2 control-label">說明</label>
 							<div class="col-sm-8"> 
 								<textarea class="ckeditor" rows="10" name="content" id="content"></textarea>
 							</div>

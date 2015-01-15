@@ -1,18 +1,18 @@
 <?php
 require_once(FUEL_PATH.'/libraries/Fuel_base_controller.php');
 
-class Chapter_manage extends Fuel_base_controller { 
+class Composition_manage extends Fuel_base_controller { 
 
-	public $view_location = 'chapter';
-	public $nav_selected = 'chapter/manage';
-	public $module_name = 'chapter';
-	public $module_uri = 'fuel/chapter/lists'; 
+	public $view_location = 'composition';
+	public $nav_selected = 'composition/manage';
+	public $module_name = 'composition';
+	public $module_uri = 'fuel/composition/lists'; 
 
 	function __construct()
 	{
 		parent::__construct();
-		$this->_validate_user('chapter');
-		$this->load->module_model(CHAPTER_FOLDER, 'chapter_manage_model');
+		$this->_validate_user('composition');
+		$this->load->module_model(COMPOSITION_FOLDER, 'composition_manage_model');
 		$this->load->module_model(CODEKIND_FOLDER, 'codekind_manage_model');
 		$this->load->helper('ajax');
 		$this->load->library('pagination');
@@ -25,8 +25,8 @@ class Chapter_manage extends Fuel_base_controller {
 	{
 		$base_url = base_url();
 		//查詢條件資料
-		$chapter = $this->codekind_manage_model->get_code_list_for_other_mod("CHAPTER",false);  
-		$vars['chapter'] = $chapter;  
+		$composition = $this->codekind_manage_model->get_code_list_for_other_mod("composition",false);  
+		$vars['composition'] = $composition;  
 		//查詢條件處理
 		$search_cp_kind = $this->input->get_post('search_cp_kind'); 
 		$search_cp_key = $this->input->get_post('search_cp_key');  
@@ -42,11 +42,11 @@ class Chapter_manage extends Fuel_base_controller {
 			
 		//列表基本設定
 		$target_url = $base_url.'fuel/'.$this->module_name.'/lists/'; 
-		$total_rows = $this->chapter_manage_model->get_count($filter);
+		$total_rows = $this->composition_manage_model->get_count($filter);
 		$config = $this->set_page->set_config($target_url, $total_rows, $dataStart, 20);
 		$dataLen = $config['per_page'];
 		$this->pagination->initialize($config);  
-		$results = $this->chapter_manage_model->get_list($dataStart, $dataLen,$filter);  
+		$results = $this->composition_manage_model->get_list($dataStart, $dataLen,$filter);  
 		$vars['total_rows'] = $total_rows; 
 		$vars['form_action'] = $base_url.'fuel/'.$this->module_name.'/lists';
 		$vars['form_method'] = 'POST';
@@ -58,7 +58,6 @@ class Chapter_manage extends Fuel_base_controller {
 		$vars['del_url'] = $base_url.'fuel/'.$this->module_name.'/del/';
 		$vars['sample_url'] = $base_url.'fuel/sample/create'; 
 		$vars['parse_url'] = $base_url.'fuel/parse/create'; 
-		$vars['cpinput_url'] = $base_url.'fuel/cpinput/create'; 
 		$vars['multi_del_url'] = $base_url.'fuel/'.$this->module_name.'/do_multi_del';
 		$vars['results'] = $results;
 		$vars['super_admin'] = $super_admin;
@@ -71,8 +70,8 @@ class Chapter_manage extends Fuel_base_controller {
 	function create()
 	{
 		//新增頁面資料
-		$chapter = $this->codekind_manage_model->get_code_list_for_other_mod("CHAPTER",false);
-		$vars['chapter'] = $chapter;
+		$composition = $this->codekind_manage_model->get_code_list_for_other_mod("composition",false);
+		$vars['composition'] = $composition;
 		//新增頁基本設定
 		$vars['form_action'] = base_url().'fuel/'.$this->module_name.'/do_create';
 		$vars['form_method'] = 'POST';
@@ -91,7 +90,7 @@ class Chapter_manage extends Fuel_base_controller {
 		$post_arr['description'] = htmlspecialchars($this->input->get_post("description"));
 		$post_arr['parse'] = htmlspecialchars($this->input->get_post("parse"));
 		//上傳檔案處理
-		$root_path = assets_server_path('chapter_img/'.$post_arr['cp_kind']."/".$post_arr['cp_key']."/");
+		$root_path = assets_server_path('composition_img/'.$post_arr['cp_kind']."/".$post_arr['cp_key']."/");
 		if (!file_exists($root_path)) {
 		    mkdir($root_path, 0777, true);
 		} 
@@ -104,15 +103,15 @@ class Chapter_manage extends Fuel_base_controller {
         if ($this->upload->do_upload('file_name'))
 		{
 			$data = array('upload_data'=>$this->upload->data()); 
-			$post_arr["file_name"] = 'chapter_img/'.$post_arr['cp_kind']."/".$post_arr['cp_key']."/".$data["upload_data"]["file_name"]; 		 
+			$post_arr["file_name"] = 'composition_img/'.$post_arr['cp_kind']."/".$post_arr['cp_key']."/".$data["upload_data"]["file_name"]; 		 
 		} else{ 
 			 $post_arr["file_name"] = '';				 
 		} 
 		//新增動作處理
-		$ID = $this->chapter_manage_model->insert($post_arr);  
+		$ID = $this->composition_manage_model->insert($post_arr);  
 		if($ID>0)
 		{
-			$module_uri = base_url().'fuel/chapter/edit/'.$ID; 
+			$module_uri = base_url().'fuel/composition/edit/'.$ID; 
 			$this->comm->plu_redirect($module_uri, 0, "新增成功");
 			die();
 		}
@@ -131,7 +130,7 @@ class Chapter_manage extends Fuel_base_controller {
 		$record;
 		if(isset($id))
 		{
-			$record = $this->chapter_manage_model->get_record($id);
+			$record = $this->composition_manage_model->get_record($id);
 		} 
 		//判斷單比資料是否存在
 		if(!isset($id) || !isset($record))
@@ -140,8 +139,8 @@ class Chapter_manage extends Fuel_base_controller {
 			die;
 		}
 		//編輯頁面資料
-		$chapter = $this->codekind_manage_model->get_code_list_for_other_mod("CHAPTER",false);
-		$vars['chapter'] = $chapter; 
+		$composition = $this->codekind_manage_model->get_code_list_for_other_mod("composition",false);
+		$vars['composition'] = $composition; 
 	 	//編輯頁基本設定
 		$vars['form_action'] = base_url().'fuel/'.$this->module_name."/do_edit/$id";
 		$vars['form_method'] = 'POST';
@@ -155,13 +154,13 @@ class Chapter_manage extends Fuel_base_controller {
 
 	function do_edit($id)
 	{ 
-		$module_uri = base_url().'fuel/chapter/edit/'.$id; 
+		$module_uri = base_url().'fuel/composition/edit/'.$id; 
 		//頁面POST資料
 		$post_arr = $this->input->post();
 		$post_arr['description'] = htmlspecialchars($this->input->get_post("description"));
 		$post_arr['parse'] = htmlspecialchars($this->input->get_post("parse"));
 		//上傳檔案處理
-		$root_path = assets_server_path('chapter_img/'.$post_arr['cp_kind']."/".$post_arr['cp_key']."/");
+		$root_path = assets_server_path('composition_img/'.$post_arr['cp_kind']."/".$post_arr['cp_key']."/");
 		if (!file_exists($root_path)) {
 		    mkdir($root_path, 0777, true);
 		} 
@@ -174,14 +173,14 @@ class Chapter_manage extends Fuel_base_controller {
         if ($this->upload->do_upload('file_name'))
 		{
 			$data = array('upload_data'=>$this->upload->data()); 
-			$post_arr["file_name"] = 'chapter_img/'.$post_arr['cp_kind']."/".$post_arr['cp_key']."/".$data["upload_data"]["file_name"]; 		 
+			$post_arr["file_name"] = 'composition_img/'.$post_arr['cp_kind']."/".$post_arr['cp_key']."/".$data["upload_data"]["file_name"]; 		 
 		} else{ 
 			$post_arr["file_name"] = $post_arr["exist_file_name"];				 
 		} 
 		//PK處理
 		$post_arr["id"] = $id;
 		//編輯處理
-		$success = $this->chapter_manage_model->update($post_arr); 
+		$success = $this->composition_manage_model->update($post_arr); 
 		if($success)
 		{
 			$this->comm->plu_redirect($module_uri, 0, "更新成功");
@@ -195,8 +194,8 @@ class Chapter_manage extends Fuel_base_controller {
 		return;
 	} 
 
-	// function get_chapter(){ 
-	// 	$result = $this->chapter_manage_model->get_chapter_list(""); 
+	// function get_composition(){ 
+	// 	$result = $this->composition_manage_model->get_composition_list(""); 
 	// 	echo json_encode($result);
 	// 	die;
 	// 	if(is_ajax())
@@ -211,7 +210,7 @@ class Chapter_manage extends Fuel_base_controller {
 		if($ids)
 		{
 			$im_ids = implode(",", $ids);
-			$success = $this->chapter_manage_model->do_multi_del($im_ids);
+			$success = $this->composition_manage_model->do_multi_del($im_ids);
 		}
 		else
 		{
@@ -236,7 +235,7 @@ class Chapter_manage extends Fuel_base_controller {
 		$response = array();
 		if(!empty($id))
 		{
-			$success = $this->chapter_manage_model->del($id);
+			$success = $this->composition_manage_model->del($id);
 			if($success)
 			{
 				$response['status'] = 1;
