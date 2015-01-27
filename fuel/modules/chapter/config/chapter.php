@@ -5,9 +5,9 @@
 |--------------------------------------------------------------------------
 */
 $config['nav']['chapter'] = array(
-'chapter/lists'		=> '全文列表', 
-'sample/lists'		=> '    - 範例',
+'chapter/lists'		=> '<span style="color:red;">全文列表</span>', 
 'parse/lists'		=> '    - 解析',
+'sample/lists'		=> '    - 範例',
 'cpinput/lists'		=> '    - 撰寫'
 );
 

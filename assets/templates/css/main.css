@@ -39,7 +39,7 @@ body {}
 
 #nav ,#nav a {height:40px;line-height:40px;background:#3d3d3d;color:white;}
 #nav .nav_mv {margin-left:45px;}
-#nav a {margin:0 0.6em;}
+#nav a {margin:0 0;}
 
 #visual {background:#c5ced3;max-height:500px;height:auto;}
 #visual img {max-width:1500px;max-height:500px;width:100%;display:block;margin:auto;}

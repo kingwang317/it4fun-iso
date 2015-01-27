@@ -78,6 +78,12 @@ class Cpinput_manage extends Fuel_base_controller {
 		$cp_id = $this->input->get_post("cp_id"); 
 		$vars['cp_key'] = $cp_key;
 		$vars['cp_id'] = $cp_id; 
+		if(!empty($cp_id) && $cp_id != "" ){
+			$vars['go_to_chapter'] = true;
+		}else{
+			$vars['go_to_chapter'] = false;
+		}
+		
 		//新增頁面資料
 		$chapter = $this->chapter_manage_model->get_chapter_list("");
 		$vars['chapter'] = $chapter;
@@ -94,8 +100,11 @@ class Cpinput_manage extends Fuel_base_controller {
 	function do_create()
 	{ 
 		$module_uri = base_url().$this->module_uri;  
+
 		//頁面POST資料
+		
 		$post_arr = $this->input->post();
+		$is_go_to_chapter = $post_arr['go_to_chapter'];
 		$post_arr['content'] = htmlspecialchars($this->input->get_post("content")); 
 		$user_info = $this->fuel_users_model->get_login_user_info(); 
 		$post_arr['author'] = $user_info['user_name'];
@@ -122,7 +131,12 @@ class Cpinput_manage extends Fuel_base_controller {
 		$ID = $this->cpinput_manage_model->insert($post_arr);  
 		if($ID>0)
 		{
-			$this->comm->plu_redirect($module_uri, 0, "新增成功");
+			if($is_go_to_chapter){
+				$this->comm->plu_redirect(base_url().'fuel/chapter/lists', 0, "新增成功");
+			}else{
+				$this->comm->plu_redirect($module_uri, 0, "新增成功");
+			}
+			
 			die();
 		}
 		else

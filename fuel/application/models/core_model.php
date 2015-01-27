@@ -71,6 +71,32 @@ class Core_model extends CI_Model {
         }
     }
 
+    public function get_chapter_inputs($cp_id){
+        $get_input_sql = @" SELECT * FROM mod_cp_input i WHERE i.cp_id = '$cp_id' ORDER BY CREATE_DATE DESC";
+        //echo $get_chapter_sql;
+        $query = $this->db->query($get_input_sql);
+        //echo $sql;exit;
+        if($query->num_rows() > 0)
+        {
+            $result = $query->result();
+           // print_r($result);
+            return $result;
+        }
+    }
+
+    public function get_chapter_samples($cp_id){
+        $get_sample_sql = @" SELECT *,(SELECT code_name FROM mod_code WHERE code_id = i.cps_kind ) AS kind_name FROM mod_cp_sample i WHERE i.cp_id = '$cp_id' ORDER BY cps_kind DESC";
+        //echo $get_chapter_sql;
+        $query = $this->db->query($get_sample_sql);
+        //echo $sql;exit;
+        if($query->num_rows() > 0)
+        {
+            $result = $query->result();
+           // print_r($result);
+            return $result;
+        }
+    }
+
     public function get_chapter_list_by_kind($cp_kind){
         $get_chapter_list_sql = @" SELECT c.* FROM mod_chapter c WHERE c.cp_kind = '$cp_kind' ORDER BY c.cp_key ASC ";
         //echo $get_chapter_sql;
@@ -115,9 +141,9 @@ class Core_model extends CI_Model {
             //print_r($result);
 
             if($result[0]->parent_id != -1 ){
-                return ' &gt; '.$result[0]->code_name.$this->get_breadcrumb($result[0]->parent_id);
+                return '&nbsp; &gt; &nbsp;'.$result[0]->code_name.$this->get_breadcrumb($result[0]->parent_id);
             }else{
-                return ' &gt; '.$result[0]->code_name;
+                return '&nbsp; &gt; &nbsp;'.$result[0]->code_name;
             }
            // print_r($result);
             

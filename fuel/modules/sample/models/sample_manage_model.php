@@ -32,7 +32,7 @@ class Sample_manage_model extends MY_Model {
 		$sql = @"SELECT a.*,b.code_name,c.title AS cp_title,c.cp_key FROM mod_cp_sample a 
 		LEFT JOIN mod_code b on a.cps_kind = b.code_id
 		LEFT JOIN mod_chapter c on a.cp_id = c.id
-		$filter ORDER BY `cps_kind` LIMIT $dataStart, $dataLen";
+		$filter ORDER BY `cp_id`,`cps_kind` LIMIT $dataStart, $dataLen";
 	
 		$query = $this->db->query($sql);
 

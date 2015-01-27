@@ -23,6 +23,7 @@
 					<div class="form-horizontal tasi-form">						   	 
 						 			
 						<div class="form-group">
+							<input type="hidden" name="go_to_chapter" value="<?php echo $go_to_chapter ?>">
 							<label class="col-sm-2 col-sm-2 control-label">對應章節</label>
 							<div class="col-sm-4"> 
 								<input type="text" class="form-control" name="cp_key" id="cp_key" <?php if (isset($cp_key)): ?>

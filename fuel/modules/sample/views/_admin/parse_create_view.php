@@ -21,6 +21,7 @@
 				</header>
 				<div class="panel-body">
 					<div class="form-horizontal tasi-form">	
+						<input type="hidden" name="go_to_chapter" value="<?php echo $go_to_chapter ?>">
 						<input type="hidden" value="-1" name="cps_kind" />
 						<div class="form-group">
 							<label class="col-sm-2 col-sm-2 control-label">對應章節</label>

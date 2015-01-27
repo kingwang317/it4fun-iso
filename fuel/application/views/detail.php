@@ -7,15 +7,22 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> <!-- 最佳的IE兼容模式 -->
 <title>Isoleader GRI Training System</title>
 <link href="<?php echo site_url() ?>assets/templates/css/main.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="<?php echo site_url() ?>assets/templates/css/screen.css">
+<link rel="stylesheet" href="<?php echo site_url() ?>assets/templates/css/jquery-ui-1.9.2.custom.min.css">
 <!--link font awesome to use the icon-->
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 <link rel="shortcut icon" type="image/png" href="<?php echo site_url() ?>assets/templates/images/iso_icon.png"/>
 <script type="text/javascript" src="<?php echo site_url() ?>assets/templates/js/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="<?php echo site_url() ?>assets/templates/js/jqueryUI-1.11.1.js"></script>
+<script type="text/javascript" src="<?php echo site_url() ?>assets/templates/js/jquery-ui-1.9.2.custom.min.js"></script>
+<script type="text/javascript" src="<?php echo site_url() ?>assets/templates/js/jquery.mousewheel.min.js" ></script>
+<script type="text/javascript" src="<?php echo site_url() ?>assets/templates/js/jquery.iviewer.min.js" ></script>
 <style>
 .sub{
     width:90%;
     margin: 5px 75px;
+}
+body{
+    background-color:#fff;
 }
 
 /*left side css*/
@@ -58,14 +65,16 @@
     cursor: auto;
 }
 .left_content{
-    min-width:550px;
-    margin:5px 0 10px 0;
-    border-top:solid 1px #ccc;
-    padding-top:10px;
-    line-height:25px;
+    min-width: 550px;
+    margin: 5px 0 10px 0;
+    border-top: solid 1px #ccc;
+    padding-top: 20px;
+    line-height: 25px;
+    padding-left: 10px;
 }
 .content_title{
     font-size:20px;
+    margin-top: 30px;
 }
 .content_detail{
     font-size:16px;
@@ -144,8 +153,79 @@ li{
     display:inline-block;
     vertical-align:top;
 }
+.author_style{
+    color: gray;
+}
 /*right side css - END*/
+* {
+    margin: 0;
+    padding: 0;
+}
 
+#iviewer {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: url('<?php echo site_url() ?>assets/templates/images/bg_transblack.png');
+    display: none;
+    z-index: 1;
+}
+
+#iviewer .controls {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 40px;
+}
+
+#iviewer .controls li {
+    float: right;
+    clear: right;
+    position: relative;
+    width: 40px;
+    height: 40px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    display: block;
+    cursor: pointer;
+    z-index: 3;
+}
+
+    #iviewer .controls:hover {
+        cursor: pointer;
+    }
+
+    #iviewer .controls .close { background-image: url('<?php echo site_url() ?>assets/templates/images/btn_close.png'); }
+    #iviewer .controls .zoomin { background-image: url('<?php echo site_url() ?>assets/templates/images/btn_zoomin.png'); }
+    #iviewer .controls .zoomout { background-image: url('<?php echo site_url() ?>assets/templates/images/btn_zoomout.png'); }
+
+#iviewer .info {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    color: #ccc;
+    font-size: 16px;
+    padding: 0;
+}
+
+#iviewer .viewer {
+    position: fixed;
+    top: 0;
+    left: 40px;
+    z-index: 2;
+    display: none;
+}
+
+#iviewer .loader {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: url('<?php echo site_url() ?>assets/templates/images/spinner.gif') no-repeat center center;
+    z-index: 2;
+}
 </style>
 </head>
 <body>
@@ -154,7 +234,7 @@ li{
 <!-- Navigation -->
 <div id="nav" class="main_width"><div class="nav_mv">
 You are in <a href="<?php echo site_url() ?> ">首頁</a>
-<?php echo $breadcrumb.'&gt;'.$chapter_detail[0]->cp_key; ?>
+<?php echo $breadcrumb.'&nbsp; &gt; &nbsp;'.$chapter_detail[0]->cp_key; ?>
 </div></div>
 
 
@@ -165,10 +245,10 @@ You are in <a href="<?php echo site_url() ?> ">首頁</a>
     <div class="sub_left">
         
         <div class="tag_list">
-            <div id="content1" class="tag tag_click">原文</div>
-            <div id="content2" class="tag">解析</div>
-            <div id="content3" class="tag">範例</div>
-            <div id="content4" class="tag">撰寫</div>
+            <div id="content1" class="tag" onclick="javascript:location.href='#1'">原文</div>
+            <div id="content2" class="tag" onclick="javascript:location.href='#2'">解析</div>
+            <div id="content3" class="tag" onclick="javascript:location.href='#3'">範例</div>
+            <div id="content4" class="tag" onclick="javascript:location.href='#4'">撰寫</div>
         </div>
         <div class="left_content content1">
             <?php echo  htmlspecialchars_decode($chapter_detail[0]->description) ?>
@@ -177,21 +257,30 @@ You are in <a href="<?php echo site_url() ?> ">首頁</a>
             <?php echo htmlspecialchars_decode($chapter_detail[0]->parse) ?>
         </div>
         <div class="left_content content3" style="display:none;">
-            <?php echo htmlspecialchars_decode($chapter_detail[0]->sample_content) ?>
+            <?php foreach ($sample_list as $s_key => $s_value) {
+                ?>
+            <div class="content_block">
+                <span class="author_style"><?php echo "the category (".htmlspecialchars_decode($s_value->kind_name).")" ?></span>
+                <div class="content_title"><?php echo htmlspecialchars_decode($s_value->title); ?></div>
+                <div class="content_detail"><?php echo htmlspecialchars_decode($s_value->content); ?></div>
+            </div>
+
+                <?php
+                
+            } ?>
         </div>
         <div class="left_content content4" style="display:none;">
+            <?php foreach ($input_list as $i_key => $i_value) {
+                ?>
             <div class="content_block">
-                <div class="content_title">彙編要領</div>
-                <div class="content_detail">銷售淨額等於產品和服務銷售總額減去銷貨退回、折扣及折讓金融投資收入包括金融貸款的利息、股東的股利收入、專利使用費及來自資產產生的直接收益（例如：資產租賃）等現金收入資產銷售收入包括有形資產（例如：房地產、基礎設施、設備）和無形資產（例如：智慧財產權、設計和品牌）</div>
+                <span class="author_style"><?php echo "the author (".htmlspecialchars_decode($i_value->author).") edit at ".htmlspecialchars_decode($i_value->create_date)." Edition ".htmlspecialchars_decode($i_value->version); ?></span>
+                <div class="content_title"><?php echo htmlspecialchars_decode($i_value->title); ?></div>
+                <div class="content_detail"><?php echo htmlspecialchars_decode($i_value->content); ?></div>
             </div>
-            <div class="content_block">
-                <div class="content_title">收入</div>
-                <div class="content_detail">為購買原物料、產品零件、場地設施及服務而發生於組織外的現金支出。包括租金、牌照費、場地設備使用費（因為這些費用具有明確的商業目的）、專利使用費、外包勞務費、員工教育訓練費用（若使用了外部培訓專家），或員工防護服裝費用等。</div>
-            </div>
-            <div class="content_block">
-                <div class="content_title">營運成本</div>
-                <div class="content_detail">為購買原物料、產品零件、場地設施及服務而發生於組織外的現金支出。包括租金、牌照費、場地設備使用費（因為這些費用具有明確的商業目的）、專利使用費、外包勞務費、員工教育訓練費用（若使用了外部培訓專家），或員工防護服裝費用等。</div>
-            </div>
+
+                <?php
+                
+            } ?>
         </div>
     </div>
     <div class="sub_right">
@@ -204,14 +293,44 @@ You are in <a href="<?php echo site_url() ?> ">首頁</a>
         }?>
           </div>
 </div>
+<!-- <div id="gzoomoverlay">
+</div>
+<div id="gzoomlbox">
+    <div id="imagebox">
+        <div id="gzoom-cont-img">
+            <img id="zoomedimage">
+            <div id="gzoomloading">
+                <a href="#" id="gzoomloadinglink">
+                    <img  src="<?php echo site_url() ?>assets/templates/images/loading.gif">
+                </a>
+            </div>
+        </div>
+    </div>
+    <div id="gzoomlbox-con-imgdata">
+        <div id="lboximgdatacontainer">
+            <div id="gzoomlbox-image-details" class="zoomPic">
+                <span id="gzoom-image-caption"></span>
+            </div>
+        </div>
+    </div>
+</div> -->
 <!-- 內容 end -->
 </div></div>
 <!-- 最底宣告 -->
-<?php  $this->load->view('foot') ?>
-</body>
-</html>
-<!--Script放後面加速頁面產生-->
+    <div id="iviewer">
+        <div class="loader"></div>
+
+        <div class="viewer"></div>
+
+        <ul class="controls">
+            <li class="close"></li>
+            <li class="zoomin"></li>
+            <li class="zoomout"></li>
+        </ul>
+
+    </div>
 <script type="text/javascript">
+
     var $log = $("#login"),
             $log_a = $(".login"),
             $content = $("#content"),
@@ -271,8 +390,38 @@ You are in <a href="<?php echo site_url() ?> ">首頁</a>
             $(this).removeClass('slide_title_hover', 200);
         }
     });
+
+    $(".sub_left img").each(function(){
+            $(this).wrap($('<a>',{
+               href:  this.src,
+               class:'imagebox'
+
+            }))
+
     
     
+    $( document ).ready(function() {
+        var ss = window.location.href.split("#");
+        if(ss.length > 1){
+            console.log(ss.length);
+            $("#content"+ss[1]).addClass("tag_click");
+                
+        }else{
+            ss[1] = "1";
+            $("#content1").addClass("tag_click");
+        }
+
+        $(".left_content").hide();
+        $("."+$("#content"+ss[1]).attr('id')).show();
+
+        
+
+        });
+
+    
+        }
+    );
     
     
 </script>
+<script type="text/javascript" src="<?php echo site_url() ?>assets/templates/js/initbox.js" ></script>

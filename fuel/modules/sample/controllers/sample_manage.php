@@ -111,6 +111,13 @@ class Sample_manage extends Fuel_base_controller {
 		$cps_kind = $this->input->get_post("cps_kind");
 		$vars['cp_key'] = $cp_key;
 		$vars['cp_id'] = $cp_id;
+
+		if(!empty($cp_id) && $cp_id != "" ){
+			$vars['go_to_chapter'] = true;
+		}else{
+			$vars['go_to_chapter'] = false;
+		}
+
 		// $vars['cps_kind'] = $cps_kind;
 		if ($cps_kind != -1) { // 要產業類別 解析為-1
 			$industry = $this->codekind_manage_model->get_code_list_for_other_mod("INDUSTRY");
@@ -139,6 +146,7 @@ class Sample_manage extends Fuel_base_controller {
 		$module_uri = base_url().$this->module_uri;  
 		//頁面POST資料
 		$post_arr = $this->input->post();
+		$is_go_to_chapter = $post_arr['go_to_chapter'];
 		$post_arr['content'] = htmlspecialchars($this->input->get_post("content"));
 		$user_info = $this->fuel_users_model->get_login_user_info();
 		$post_arr['create_by'] = $user_info['user_name'];
@@ -169,7 +177,12 @@ class Sample_manage extends Fuel_base_controller {
 			}else{ 
 				$module_uri = base_url().'fuel/parse/edit/'.$ID; 
 			}
-			$this->comm->plu_redirect($module_uri, 0, "新增成功");
+
+			if($is_go_to_chapter){
+				$this->comm->plu_redirect(base_url().'fuel/chapter/lists', 0, "新增成功");
+			}else{
+				$this->comm->plu_redirect($module_uri, 0, "新增成功");
+			}
 			die();
 		}
 		else
