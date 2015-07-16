@@ -54,6 +54,13 @@ $route['404_override'] = 'fuel/page_router';
 // $route['product/(:num)'] 		= 'series/product/$1';
 
  
+ $route['GriForm'] = 'question/GriForm';
+ $route['GriForm/(:num)'] = 'question/ShowGriForm/$1';
+ $route['FormSave'] = 'question/do_form_design_save';
+ $route['UserSave'] = 'question/do_user_save';
+ $route['GetChapter'] = 'question/get_chapter';
+ $route['GetContent/(:num)/(:any)'] = 'question/get_content/$1/$2';
+
 $lang_ary = array('zh-TW', 'EN', 'ES');
 
 foreach($lang_ary as $l)

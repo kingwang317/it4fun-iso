@@ -97,10 +97,36 @@ class Core_model extends CI_Model {
         }
     }
 
+    // public function get_chapter_samples2($cp_id,$cps_kind)){
+    //     $get_sample_sql = @" SELECT *,(SELECT code_name FROM mod_code WHERE code_id = i.cps_kind ) AS kind_name FROM mod_cp_sample i WHERE i.cp_id = '$cp_id' ORDER BY cps_kind DESC";
+    //     //echo $get_chapter_sql;
+    //     $query = $this->db->query($get_sample_sql);
+    //     //echo $sql;exit;
+    //     if($query->num_rows() > 0)
+    //     {
+    //         $result = $query->result();
+    //        // print_r($result);
+    //         return $result;
+    //     }
+    // }
+
     public function get_chapter_list_by_kind($cp_kind){
         $get_chapter_list_sql = @" SELECT c.* FROM mod_chapter c WHERE c.cp_kind = '$cp_kind' ORDER BY c.cp_key ASC ";
         //echo $get_chapter_sql;
         $query = $this->db->query($get_chapter_list_sql);
+        //echo $sql;exit;
+        if($query->num_rows() > 0)
+        {
+            $result = $query->result();
+           // print_r($result);
+            return $result;
+        }
+    }
+
+    public function get_fc_id($cp_id,$cps_kind){
+        $sql = @" SELECT c.* FROM mod_form_collections c WHERE c.cps_kind = '$cps_kind' AND c.cp_id = '$cp_id' ";
+        //echo $get_chapter_sql;
+        $query = $this->db->query($sql);
         //echo $sql;exit;
         if($query->num_rows() > 0)
         {
@@ -338,6 +364,217 @@ class Core_model extends CI_Model {
 
         return;
     }
+
+    public function get_last_id(){
+        $sql = "SELECT last_insert_id() as ID";
+        $id_result= $this->db->query($sql);
+        return $id_result->row()->ID; 
+    }
+
+    // public function get_element_type_id($name){
+    //     $sql = "SELECT id FROM mod_element_types WHERE name=?";
+    //     $para = array(
+    //         $name
+    //     );
+    //     $id_result= $this->db->query($sql,$para);
+    //     return $id_result->row()->id; 
+    // }
+
+    public function get_forms_json_by_fc_id($fc_id){
+        $sql = "SELECT form_json FROM mod_forms WHERE fc_id=? order by `order` ";
+        $para = array(
+            $fc_id
+        );
+        $query = $this->db->query($sql,$para);
+        if($query->num_rows() > 0)
+        {
+            $result = $query->result();
+
+            return $result;
+        } 
+    }
+
+    public function get_form($form_id){
+        $sql = "SELECT * FROM mod_forms WHERE id=?";
+        $para = array(
+            $form_id
+        );
+        $query = $this->db->query($sql,$para);
+        if($query->num_rows() > 0)
+        {
+            $result = $query->row();
+
+            return $result;
+        } 
+    }
+
+    // public function get_element($form_id){
+    //     $sql = "SELECT * FROM mod_form_elements WHERE form_id=?";
+    //     $para = array(
+    //         $form_id
+    //     );
+    //     $query = $this->db->query($sql,$para);
+    //     if($query->num_rows() > 0)
+    //     {
+    //         $result = $query->result();
+
+    //         return $result;
+    //     } 
+    // }
+
+    // public function get_compose($form_id){
+    //     $sql = "SELECT * FROM mod_form_compose WHERE form_id=?";
+    //     $para = array(
+    //         $form_id
+    //     );
+    //     $query = $this->db->query($sql,$para);
+    //     if($query->num_rows() > 0)
+    //     {
+    //         $result = $query->result();
+
+    //         return $result;
+    //     } 
+    // }
+
+    public function create_form_collection($cp_id,$cps_kind,$create_by){
+        $sql = @"INSERT INTO mod_form_collections (
+                                            cp_id, 
+                                            cps_kind,
+                                            create_date, 
+                                            create_by                                     
+                                        ) 
+                VALUES ( ?,?, NOW(), ?)"; 
+
+        $para = array(
+                $cp_id, 
+                $cps_kind,
+                $create_by
+            );
+
+        $success = $this->db->query($sql, $para);
+        // print_r($success);
+        // die;
+        if($success)
+        {
+            return $this->get_last_id();
+        }
+
+        return;
+    }
+
+    // public function create_form($fc_id,$name,$desc,$create_by,$form_type){
+    //     $sql = @"INSERT INTO mod_forms (
+    //                                         fc_id,
+    //                                         name, 
+    //                                         `desc`,
+    //                                         create_date, 
+    //                                         create_by,   
+    //                                         form_type                                        
+    //                                     ) 
+    //             VALUES ( ?, ?, ?, NOW(), ?, ?)"; 
+
+    //     $para = array(
+    //             $fc_id,
+    //             $name, 
+    //             $desc,
+    //             $create_by,
+    //             $form_type
+    //         );
+
+    //     $success = $this->db->query($sql, $para);
+    //     // print_r($success);
+    //     // die;
+    //     if($success)
+    //     {
+    //         return $this->get_last_id();
+    //     }
+
+    //     return;
+    // }
+
+    public function create_form2($fc_id,$name,$desc,$create_by,$form_json){
+        $sql = @"INSERT INTO mod_forms (
+                                            fc_id,
+                                            name, 
+                                            `desc`,
+                                            form_json,
+                                            create_date, 
+                                            create_by                                    
+                                        ) 
+                VALUES ( ?, ?, ?, ?, NOW(), ?)"; 
+
+        $para = array(
+                $fc_id,
+                $name, 
+                $desc,
+                $form_json,
+                $create_by
+            );
+
+        $success = $this->db->query($sql, $para);
+        // print_r($success);
+        // die;
+        if($success)
+        {
+            return $this->get_last_id();
+        }
+
+        return;
+    }
+
+    // public function create_compose($form_id,$name,$type,$create_by){
+    //     $sql = @"INSERT INTO mod_form_compose (
+    //                                         form_id, 
+    //                                         `name`,
+    //                                         type, 
+    //                                         create_by,   
+    //                                         create_date                                        
+    //                                     ) 
+    //             VALUES ( ?, ?, ?, ?, NOW())"; 
+
+    //     $para = array(
+    //             $form_id, 
+    //             $name,
+    //             $type,
+    //             $create_by
+    //         );
+
+    //     $success = $this->db->query($sql, $para);
+    //     if($success)
+    //     {
+    //         return $this->get_last_id();
+    //     }
+
+    //     return;
+    // }
+
+    // public function create_element($form_id,$element_type_id,$row_id,$col_id,$create_by){
+    //     $sql = @"INSERT INTO mod_form_elements (
+    //                                         form_id, 
+    //                                         `element_type_id`,
+    //                                         row_id, 
+    //                                         col_id,
+    //                                         create_by,   
+    //                                         create_date                                        
+    //                                     ) 
+    //             VALUES ( ?, ?, ?, ?, ?, NOW())"; 
+
+    //     $para = array(
+    //             $form_id, 
+    //             $element_type_id,
+    //             $row_id,
+    //             $col_id,
+    //             $create_by
+    //         );
+
+    //     $success = $this->db->query($sql, $para);
+    //     if($success)
+    //     {
+    //         return true;
+    //     }
+
+    //     return;
+    // }
  
 
 }
