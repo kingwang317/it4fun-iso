@@ -68,16 +68,25 @@ class Question extends CI_Controller {
 		if(true)
 		{  
 			$post_arr = $this->input->post();
-			$cp_id = 1;
-			$fc_id = 1;
+			$get_arr = $this->input->get();
+			$cp_id = isset($get_arr['cp_id'])?$get_arr['cp_id']:-1;
+			$fc_id = isset($get_arr['fc_id'])?$get_arr['fc_id']:-1;
+			// $cp_id = 1;
+			// $fc_id = 1;
 			$cps_kind = 2;
 			$user = 'bowen';
-			$fs_id = $this->core_model->create_form_collection($cp_id,$cps_kind,$user);
+
+			if ($fc_id == -1 || !$this->core_model->check_fc_id_exists($fc_id)) {
+				$fc_id = $this->core_model->create_form_collection($cp_id,$cps_kind,$user);
+			}else{
+				$this->core_model->delete_form_by_fc_id($fc_id);
+			}
+			
 			foreach ($post_arr['data'] as $form) {
-				$this->core_model->create_form2($fs_id,$form["QT"],$form["HT"],$user,json_encode($form));				 
+				$this->core_model->create_form($fc_id,$form["QT"],$form["HT"],$user,json_encode($form));				 
 			}
 			$result['status'] = 1; 
-			$result['fs_id'] = $fs_id; 
+			$result['fc_id'] = $fc_id; 
 			echo json_encode($result);
 		}
 		else
@@ -176,6 +185,7 @@ class Question extends CI_Controller {
 
 			$r = new stdClass();
 			$r->data = $chapter_result;
+			// $r->fc_id = $fc_id;
 
 			// $user = 'bowen';
 			// $fs_id = $this->core_model->create_form_collection($cp_id,$cps_kind,$user);

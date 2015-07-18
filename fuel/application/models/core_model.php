@@ -124,15 +124,15 @@ class Core_model extends CI_Model {
     }
 
     public function get_fc_id($cp_id,$cps_kind){
-        $sql = @" SELECT c.* FROM mod_form_collections c WHERE c.cps_kind = '$cps_kind' AND c.cp_id = '$cp_id' ";
+        $sql = @" SELECT id FROM mod_form_collections c WHERE c.cps_kind = '$cps_kind' AND c.cp_id = '$cp_id' ";
         //echo $get_chapter_sql;
         $query = $this->db->query($sql);
         //echo $sql;exit;
         if($query->num_rows() > 0)
         {
-            $result = $query->result();
+            $result = $query->row();
            // print_r($result);
-            return $result;
+            return $result->id;
         }
     }
 
@@ -492,7 +492,24 @@ class Core_model extends CI_Model {
     //     return;
     // }
 
-    public function create_form2($fc_id,$name,$desc,$create_by,$form_json){
+    public function check_fc_id_exists($fc_id){
+        $sql = @"SELECT COUNT(*) count FROM mod_form_collections where id = ?"; 
+
+        $para = array(
+                $fc_id
+            );
+
+        $query = $this->db->query($sql, $para);
+        
+        if($query->num_rows() > 0)
+        {
+            return true;
+        } 
+
+        return false;
+    }
+
+    public function create_form($fc_id,$name,$desc,$create_by,$form_json){
         $sql = @"INSERT INTO mod_forms (
                                             fc_id,
                                             name, 
@@ -521,6 +538,20 @@ class Core_model extends CI_Model {
 
         return;
     }
+
+    public function delete_form_by_fc_id($fc_id){
+        $sql = @"DELETE mod_forms WHERE fc_id=?"; 
+
+        $para = array(
+                $fc_id
+            );
+
+        $success = $this->db->query($sql, $para);
+        
+
+        return $success;
+    }
+
 
     // public function create_compose($form_id,$name,$type,$create_by){
     //     $sql = @"INSERT INTO mod_form_compose (
