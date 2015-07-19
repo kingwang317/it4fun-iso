@@ -235,7 +235,7 @@ class Core_model extends CI_Model {
     public function get_series_sub_detail($parent_id){
         $sql = @"select * from mod_code where parent_id  = '$parent_id' ";
         $query = $this->db->query($sql);
-        //echo $sql;exit;
+        // echo $sql.'<br/>';//exit;
         if($query->num_rows() > 0)
         {
             $result = $query->result();
@@ -500,7 +500,7 @@ class Core_model extends CI_Model {
             );
 
         $query = $this->db->query($sql, $para);
-        
+
         if($query->num_rows() > 0)
         {
             return true;
@@ -540,7 +540,7 @@ class Core_model extends CI_Model {
     }
 
     public function delete_form_by_fc_id($fc_id){
-        $sql = @"DELETE mod_forms WHERE fc_id=?"; 
+        $sql = @"DELETE FROM mod_forms WHERE fc_id=?"; 
 
         $para = array(
                 $fc_id

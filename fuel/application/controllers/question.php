@@ -17,6 +17,11 @@ class Question extends CI_Controller {
 		// echo "<pre>"; 
 		// print_r($index_list);
 		// exit;
+		$result = array();
+		$result = $this->get_sub_chapter(11,$result);
+		print_r($result);
+		die;
+
 		$vars['index_list'] = $index_list;
 		$vars['views'] = 'gri';
 		$vars['base_url'] = base_url();
@@ -206,6 +211,21 @@ class Question extends CI_Controller {
 		die();
 	}
 
+	function get_sub_chapter($code_id,$result){		
+
+		$array = $this->core_model->get_series_sub_detail($code_id);
+		if (sizeof($array)>0) {
+			foreach ($array as $key) {
+				array_push($result, $key->code_id);
+				$this->get_sub_chapter($key->code_id,$result);
+			}
+		}else{
+			array_push($result, $code_id);
+			// print_r($result);
+		}
+		return $result;
+	}
+
 	function formatGriObj($row,$cps_kind,$fc_id=-1){
 		$c = new stdClass();
 		$c->cp_id = $row->id;
@@ -217,7 +237,7 @@ class Question extends CI_Controller {
           <li>|</li>
           <li><a href='#' data-toggle='modal' data-target='#myModal2' cp_id='$row->id' cps_kind='$cps_kind' >composition</a></li>
           <li>|</li>
-          <li><a href='#' data-toggle='modal' data-target='#myModal3' cp_id='$row->id' cps_kind='$cps_kind' fc_id='$fc_id' >design</a></li>
+          <li><a href='#' data-toggle='modal' data-target='#myModal3' cp_id='$row->id' cps_kind='$cps_kind' fc_id='$fc_id' title='$row->id' >design</a></li>
         </ul>";
 		$c->Numbers = $row->cp_key;
 		$c->Status = '';
