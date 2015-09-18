@@ -14,6 +14,7 @@
         <script type="text/javascript" src="<?php echo $base_url?>assets/Qassets/js/jquery.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.3/handlebars.min.js"></script>
+        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
         <!--<![endif]-->
         <!--<![endif]-->
         <style type="text/css">
@@ -32,23 +33,38 @@
             box-shadow: 0px 0px 5px 2px rgba(209,209,209,1);
             margin-bottom: 10px;
           }
+          .form-edit:hover{cursor: move;}
+          .show-area:hover{cursor: move; background-color: #F4F4F4;}
           .show-area{
             position: relative;
             display: block;
             margin-bottom: 10px;
             margin-top: 10px;
+            background-color: #fff;
+            width: 100%;
+            height: 100%;
+            padding: 10px 20px 10px 20px;
           }
-          .show-area-btn-group{position: absolute; top:0; right: 0;}
+          .show-area h3{margin-top: 5px; margin-bottom: 5px; font-size: 20px;}
+          .show-area h4{color:#B5B5B5; margin-top: 5px; font-size: 16px; padding-left: 5px;}
+          .ShadowBox{
+            -webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.75);
+            -moz-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.75);
+            box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.75);
+            background-color: #FFFFFF !important;
+          }
+          .show-area-btn-group{position: absolute; top:10px; right: 20px;}
           .pure-g{margin-bottom: 5px; letter-spacing: 0em;}
           p.LINE{border-top: 1px solid #ddd; margin-top: 5px;}
           label{font-size: 12px;}
+          .radio, .checkbox label{line-height: 23px;}
+          .panel-body{padding: 0px;}
         </style>
         <script type="text/javascript">
-
           var formArray = [];
-
           jQuery(document).ready(function($) {
             $("a[tpl='Grid']").click(function(event) {
+              $(".form-edit").remove();
               var source   = $("#grid-template").html();
               var template = Handlebars.compile(source);
               var context = {name: "Grid"};
@@ -109,6 +125,7 @@
 
             /*這裡是Option*/
             $("a[tpl='MultipleChoice']").click(function(event) {
+              $(".form-edit").remove();
               var source   = $("#Multiple-template").html();
               var template = Handlebars.compile(source);
               var context = {name: "Option", FormType: 0};
@@ -120,6 +137,7 @@
             });
 
             $("a[tpl='Checkboxs']").click(function(event) {
+              $(".form-edit").remove();
               var source   = $("#Multiple-template").html();
               var template = Handlebars.compile(source);
               var context = {name: "Option", FormType: 1};
@@ -150,32 +168,6 @@
               var html    = template(context);
               $(".option-list").append(html);
 
-            });
-
-            function logArrayElements(element, index, array) {
-              console.log('a[' + index + '] = ' + element);
-            }
-
-            $(document).on("click", "button[name='Save']", function(){
-              
-                formArray.forEach(logArrayElements);
-
-                var url = '<?php echo $base_url?>FormSave';   
-                
-                $.ajax({
-                  url: url,
-                  type: 'POST',
-                  dataType: 'json',
-                  data: {data : formArray},
-                  success: function(data)
-                  {
-                    console.log(data);
-                    if(data.status == 1)
-                    { 
-
-                    } 
-                  }
-                });
             });
 
 
@@ -209,9 +201,7 @@
               });
 
               console.log(OptObj);
-
               formArray.push(OptObj);
-
               var source   = $("#option-show-template").html();
               var template = Handlebars.compile(source);
               var html     = template(OptObj);
@@ -259,9 +249,7 @@
               });
 
               console.log(GridObj);
-
               formArray.push(GridObj);
-
               var source   = $("#grid-show-template").html();
               var template = Handlebars.compile(source);
               var html     = template(GridObj);
@@ -270,7 +258,45 @@
 
               $("div[name='Grid']").remove();
             });  
-            /*這裡是Option end*/    
+            /*這裡是Option end*/
+
+            function logArrayElements(element, index, array) {
+              console.log('a[' + index + '] = ' + element);
+            }
+
+            $(document).on("click", "button[name='Save']", function(){
+              
+                formArray.forEach(logArrayElements);
+
+                var url = '<?php echo $base_url?>FormSave';   
+                
+                $.ajax({
+                  url: url,
+                  type: 'POST',
+                  dataType: 'json',
+                  data: {data : formArray},
+                  success: function(data)
+                  {
+                    console.log(data);
+                    if(data.status == 1)
+                    { 
+
+                    } 
+                  }
+                });
+            });
+
+            $( "#FormArea" ).sortable({
+              placeholder: "show-area",
+              out: function( event, ui ) {
+                ui.item.removeClass('ShadowBox');
+              },
+              over: function(event, ui)
+              {
+                ui.item.addClass('ShadowBox');
+              }
+
+            });
           });
         </script>
     </head>
@@ -278,7 +304,7 @@
       <div id="wrapper">
         <div class="panel panel-default">
           <div class="panel-heading">Panel heading without title</div>
-          <div class="panel-body">
+          <div class="panel-body" id="FormArea">
             
           </div>
           <div class="panel-footer">

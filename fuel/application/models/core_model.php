@@ -235,7 +235,7 @@ class Core_model extends CI_Model {
     public function get_series_sub_detail($parent_id){
         $sql = @"select * from mod_code where parent_id  = '$parent_id' ";
         $query = $this->db->query($sql);
-        // echo $sql.'<br/>';//exit;
+        //echo $sql;exit;
         if($query->num_rows() > 0)
         {
             $result = $query->result();

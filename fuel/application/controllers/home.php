@@ -50,8 +50,8 @@ class Home extends CI_Controller {
  		$vars['chapter_detail'] = $chapter_detail;
  		$chapter_list = $this->core_model->get_chapter_list_by_kind($chapter_detail[0]->cp_kind);
  		$vars['chapter_list'] = $chapter_list;
- 		$vars['sample_list'] = $this->core_model->get_chapter_samples($chapter_detail[0]->cp_kind);
- 		$vars['input_list'] = $this->core_model->get_chapter_inputs($chapter_detail[0]->cp_kind);
+ 		$vars['sample_list'] = $this->core_model->get_chapter_samples($chapter_id);
+ 		$vars['input_list'] = $this->core_model->get_chapter_inputs($chapter_id);
  		$vars['kind_name'] = $this->core_model->get_kind_name($chapter_detail[0]->cp_kind);
  		//echo $this->core_model->get_breadcrumb($chapter_detail[0]->cp_kind);
  		//die();

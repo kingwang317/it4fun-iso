@@ -89,8 +89,8 @@
 						</th>
 						<th>編號</th>
 						<th>範例分類</th>
-						<th>對應章節</th>
-						<th>主旨</th> 
+						<th>條文主旨</th>
+						<th>範例主旨</th> 
 						<th>編輯</th>
 					</tr>
 				</thead>

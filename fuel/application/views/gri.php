@@ -18,13 +18,12 @@
         <script type="text/javascript" src="https://cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.3/handlebars.min.js"></script>
         <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-
+        <script type="text/javascript">
+          var base_url = "<?php echo $base_url;?>";
+        </script>
         <script type="text/javascript" src="<?php echo $base_url?>assets/Qassets/js/gri.js"></script>
         <!--<![endif]-->
         <!--<![endif]-->
-        <script type="text/javascript">
-          
-        </script>
     </head>
     <body>
     <div id="wrapper">
@@ -63,31 +62,31 @@
                   <?php if(isset($root_value->sub_cate )):?>
                     <?php foreach ($root_value->sub_cate as $key => $sub_cate_value):?>
                       <li class="dropdown-submenu">
-                        <a tabindex="-1" href="#"><?php echo $sub_cate_value->code_name ?></a>
+                        <a tabindex="-1" href="#" CodeId="<?php echo $sub_cate_value->code_id ?>" ParentId="<?php echo $sub_cate_value->parent_id ?>" Level="1"><?php echo $sub_cate_value->code_name ?></a>
                         <ul class="dropdown-menu">
                           <?php if(isset($sub_cate_value->chapters)):?>
                             <?php foreach ($sub_cate_value->chapters as $key => $sub_chapter_value):?>
-                              <li><a href="#"><?php echo $sub_chapter_value->cp_key ?></a></li>
+                              <li><a href="#" CpId="<?php echo $sub_chapter_value->id?>" Level="1"><?php echo $sub_chapter_value->cp_key ?></a></li>
                             <?php endforeach;?>
                           <?php endif;?>
                           <?php if(isset($sub_cate_value->sub_cate)):?>
                             <?php foreach ($sub_cate_value->sub_cate as $key => $third_cate_value):?>
                               <li class="dropdown-submenu">
-                                <a tabindex="-1" href="#"><?php echo str_replace("Sub- Categories:", "", $third_cate_value->code_name) ?></a>
+                                <a tabindex="-1" href="#" CodeId="<?php echo $third_cate_value->code_id ?>" ParentId="<?php echo $third_cate_value->parent_id ?>" Level="2"><?php echo str_replace("Sub- Categories:", "", $third_cate_value->code_name) ?></a>
                                 <ul class="dropdown-menu">
                                   <?php if(isset($third_cate_value->chapters)):?>
                                     <?php foreach ($third_cate_value->chapters as $key => $third_chapter_value):?>
-                                      <li><a href="#"><?php echo $third_chapter_value->cp_key ?></a></li>
+                                      <li><a href="#" CpId="<?php echo $third_chapter_value->id?>" Level="2"><?php echo $third_chapter_value->cp_key ?></a></li>
                                     <?php endforeach;?>
                                   <?php endif;?>
                                   <?php if(isset($third_cate_value->sub_cate)):?>
                                     <?php foreach ($third_cate_value->sub_cate as $key => $fourth_cate_value):?>
                                       <li class="dropdown-submenu">
-                                        <a tabindex="-1" href="#"><?php echo str_replace("Aspect:", "", $fourth_cate_value->code_name); ?></a>
+                                        <a tabindex="-1" href="#" CodeId="<?php echo $fourth_cate_value->code_id ?>" ParentId="<?php echo $fourth_cate_value->parent_id ?>" Level="3"><?php echo str_replace("Aspect:", "", $fourth_cate_value->code_name); ?></a>
                                         <ul class="dropdown-menu">
                                           <?php if(isset($fourth_cate_value->chapters)):?>
                                             <?php foreach ($fourth_cate_value->chapters as $key => $fourth_chapter_value):?>
-                                              <li><a href="#"><?php echo $third_chapter_value->cp_key ?></a></li>
+                                              <li><a href="#" CpId="<?php echo $fourth_chapter_value->id?>" Level="3"><?php echo $fourth_chapter_value->cp_key ?></a></li>
                                             <?php endforeach;?>
                                           <?php endif;?>
                                         </ul>
@@ -127,31 +126,31 @@
                 <?php if(isset($root_value->sub_cate )):?>
                   <?php foreach ($root_value->sub_cate as $key => $sub_cate_value):?>
                     <li class="dropdown-submenu">
-                      <a tabindex="-1" href="#"><?php echo $sub_cate_value->code_name ?></a>
+                      <a tabindex="-1" href="#" CodeId="<?php echo $sub_cate_value->code_id ?>" ParentId="<?php echo $sub_cate_value->parent_id ?>" Level="1"><?php echo $sub_cate_value->code_name ?></a>
                       <ul class="dropdown-menu">
                         <?php if(isset($sub_cate_value->chapters)):?>
                           <?php foreach ($sub_cate_value->chapters as $key => $sub_chapter_value):?>
-                            <li><a href="#"><?php echo $sub_chapter_value->cp_key ?></a></li>
+                            <li><a href="#" href="#" CpId="<?php echo $sub_chapter_value->id?>" Level="1"><?php echo $sub_chapter_value->cp_key ?></a></li>
                           <?php endforeach;?>
                         <?php endif;?>
                         <?php if(isset($sub_cate_value->sub_cate)):?>
                           <?php foreach ($sub_cate_value->sub_cate as $key => $third_cate_value):?>
                             <li class="dropdown-submenu">
-                              <a tabindex="-1" href="#"><?php echo str_replace("Sub- Categories:", "", $third_cate_value->code_name) ?></a>
+                              <a tabindex="-1" href="#" CodeId="<?php echo $third_cate_value->code_id ?>" ParentId="<?php echo $third_cate_value->parent_id ?>" Level="2"><?php echo str_replace("Sub- Categories:", "", $third_cate_value->code_name) ?></a>
                               <ul class="dropdown-menu">
                                 <?php if(isset($third_cate_value->chapters)):?>
                                   <?php foreach ($third_cate_value->chapters as $key => $third_chapter_value):?>
-                                    <li><a href="#"><?php echo $third_chapter_value->cp_key ?></a></li>
+                                    <li><a href="#" CpId="<?php echo $third_chapter_value->id?>" Level="2"><?php echo $third_chapter_value->cp_key ?></a></li>
                                   <?php endforeach;?>
                                 <?php endif;?>
                                 <?php if(isset($third_cate_value->sub_cate)):?>
                                   <?php foreach ($third_cate_value->sub_cate as $key => $fourth_cate_value):?>
                                     <li class="dropdown-submenu">
-                                      <a tabindex="-1" href="#"><?php echo str_replace("Aspect:", "", $fourth_cate_value->code_name); ?></a>
+                                      <a tabindex="-1" href="#" CodeId="<?php echo $fourth_cate_value->code_id ?>" ParentId="<?php echo $fourth_cate_value->parent_id ?>" Level="3"><?php echo str_replace("Aspect:", "", $fourth_cate_value->code_name); ?></a>
                                       <ul class="dropdown-menu">
                                         <?php if(isset($fourth_cate_value->chapters)):?>
                                           <?php foreach ($fourth_cate_value->chapters as $key => $fourth_chapter_value):?>
-                                            <li><a href="#"><?php echo $third_chapter_value->cp_key ?></a></li>
+                                            <li><a href="#" CpId="<?php echo $fourth_chapter_value->id?>" Level="3"><?php echo $third_chapter_value->cp_key ?></a></li>
                                           <?php endforeach;?>
                                         <?php endif;?>
                                       </ul>
@@ -172,7 +171,7 @@
           </ul>
         </div>
         <div class="pure-u-sm-24-24" id="TableContent">
-          <table class="table table-hover" id="GriTable">
+          <table class="table table-hover" id="GriTable" width="100%">
             <thead>
               <tr>
                 <th>Indicator<br /> Numbers<i class="glyphicon glyphicon-triangle-bottom" nowStatus="bottom"></i></th>
@@ -190,11 +189,11 @@
                 <td>
                     說明組織名稱<br />
                     <ul class="ulMenu list-inline">
-                      <li><a href="#" data-toggle="modal" data-target="#myModal">indicator</a></li>
+                      <li><a href="#" data-toggle="modal" data-target="#myModal" CPID="1">indicator</a></li>
                       <li>|</li>
-                      <li><a href="#" data-toggle="modal" data-target="#myModal1">implantation</a></li>
+                      <li><a href="#" data-toggle="modal" data-target="#myModal1" CPID="1">implantation</a></li>
                       <li>|</li>
-                      <li><a href="#" data-toggle="modal" data-target="#myModal3">composition</a></li>
+                      <li><a href="#" data-toggle="modal" data-target="#myModal3" CPID="1">composition</a></li>
                     </ul>
                 </td>
                 <td></td>
@@ -246,7 +245,7 @@
     </div>
       <!-- Modal -->
       <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -263,6 +262,23 @@
       </div>
 
       <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="myModalLabel">條文xxxx</h4>
+            </div>
+            <div class="modal-body">
+             內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
@@ -288,23 +304,23 @@
                         <div class="pure-u-sm-8-24">
                           <ul class="list-unstyled">
                             <li>Basic</li>
-                            <li><a href="#">Text</a></li>
-                            <li><a href="#">Paragraph Text</a></li>
+                            <!-- <li><a href="#">Text</a></li>
+                            <li><a href="#">Paragraph Text</a></li> -->
                             <li><a href="#" tpl="MultipleChoice">Multiple Choice</a></li>
                             <li><a href="#" tpl="Checkboxs">Checkboxs</a></li>
-                            <li><a href="#">Choose from a list</a></li>
+                            <!-- <li><a href="#">Choose from a list</a></li> -->
                           </ul>
                         </div>
                         <div class="pure-u-sm-8-24">
                           <ul class="list-unstyled">
                             <li>ADVANCED</li>
-                            <li><a href="#">Scale</a></li>
+                            <!-- <li><a href="#">Scale</a></li> -->
                             <li><a href="#" tpl="Grid">Grid</a></li>
-                            <li><a href="#">Date</a></li>
-                            <li><a href="#">Time</a></li>
+                            <!-- <li><a href="#">Date</a></li>
+                            <li><a href="#">Time</a></li> -->
                           </ul>
                         </div>
-                        <div class="pure-u-sm-8-24">
+                        <!-- <div class="pure-u-sm-8-24">
                           <ul class="list-unstyled">
                             <li>LAYOUT</li>
                             <li><a href="#">Section header</a></li>
@@ -312,7 +328,7 @@
                             <li><a href="#">Image</a></li>
                             <li><a href="#">Video</a></li>
                           </ul>
-                        </div>
+                        </div> -->
                       </div>
                     </div>
                   </div>
@@ -323,17 +339,17 @@
             </div>
           </div>
         </div>
-      </div>
+      </div></div>
 
-      <div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+      <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <h4 class="modal-title" id="myModalLabel">撰寫</h4>
+              <h4 class="modal-title" id="myModalLabel">解析</h4>
             </div>
             <div class="modal-body">
-             
+             內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -341,6 +357,7 @@
           </div>
         </div>
       </div>
+
       <script id="grid-template" type="text/x-handlebars-template">
         <div class="form-edit" name="{{name}}">
           <div class="pure-g">

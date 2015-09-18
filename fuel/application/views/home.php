@@ -13,105 +13,32 @@
 <link rel="shortcut icon" type="image/png" href="<?php echo site_url() ?>assets/templates/images/iso_icon.png"/>
 <script type="text/javascript" src="<?php echo site_url() ?>assets/templates/js/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="<?php echo site_url() ?>assets/templates/js/jqueryUI-1.11.1.js"></script>
-<style type="text/css">
-.list {
-    max-width:1200px;
-    margin: 0px auto;
-    width:80%;
-    font-size:17px;
-}
-.show_button{
-    font-size:18px;
-    margin-bottom:20px;
-}
-.h1_button {
-    color:white;
-    background:black;
-    font-weight: normal;
-    font-size:14px;
-    margin:10px 10px 10px 0;
-    text-align:center;
-    display:inline-block;
-    height:40px;
-    line-height:40px;
-    border:solid 1px #ccc;
-    border-radius: 2px;
-    cursor: pointer;
-}
-.button_hover{
-    transition: opacity 8000 ease-in-out;
-    color:white;
-    background:#E54040;
-    cursor: pointer;
-}
-.button_click{
-    transition: opacity 8000 ease-in-out;
-    color:white;
-    background:#E54040;
-    cursor: auto;
-}
-.list_block{
-    margin-bottom:30px;
-    padding-bottom:10px;
-    border:solid 1px #ccc;
-    background:#F6F6F6;
-    border-radius: 2px;
-}
-.list_title{
-    width: -moz-calc(100%-1px);
-    width: -webkit-calc(100%-1px);
-    width: calc(100%-1px);
-    font-size:22px;
-    background:#E54040;
-    margin-left:-1px;
-    height:60px;
-    color:white;
-    text-indent:20px;
-    line-height:60px;
-    border-radius: 2px 2px 0 0;
-    padding-left:4px;
-    color:#fff;
-}
-.detail_block{
-    padding:20px 0 10px 40px;
-}
-.detail_link{
-    margin:10px 10px 10px 0;
-    color:#Db3a3a;
-    display:inline-block;
-    border:solid 1px #ccc;
-    border-radius: 2px;
-    cursor: pointer;
-    height:30px;
-    line-height:30px;
-    width:100px;
-    text-align:center;
-    background:#FFF;
-    font-weight:100;
-    font-size:16px;
-}
-.fa-file-text-o{
-    color:#DB3a3a;
-    margin-right:5px;
-}
-.category{
-    font-size:20px;
-    margin:10px 0 10px 0;
-}
-</style>
 </head>
 
 <body>
 <!-- 上方檔案 ↓ -->
-<?php  $this->load->view('top')?>
-<!-- Navigation -->
+<?php  //$this->load->view('top')?>
+<!-- Navigation 
 <div id="nav" class="main_width"><div class="nav_mv">
 You are in <a href="index.php">首頁</a> &gt; <a href="sub1.php">索引總表</a> 
-</div></div>
+</div></div>-->
 <!-- Visual -->
 <div id="visual" class="main_width">
-<img src="<?php echo site_url() ?>assets/templates/images/vs01.jpg"/>
+    <div class='top_title'>GRI G4 中英雙語全文查詢系統</div>
+    <a href="#"><div class='top_img_title'>進一步了解如何使用GRI G4查詢系統<span class="fa fa-arrow-circle-right"></span></div></a>
+    <div class="search">
+        <span class="fa fa-search"></span><div id='main_search'><input id="search_input" type="input" autocomplete="off"></input></div><div id='search_button'>Search</div>
+        <div id="second_title">
+        <div id="second_text1">完整收錄 GRI G4 中英雙語指引全文</div>
+        <div id="second_text2">以供編制<a href="http://www.isoleader.com.tw" target="_blank">CSR社會責任報告書</a>參考使用</div>
+    </div>
+    </div>
+    
+    <div id='top_img'>
+        <img src="<?php echo site_url() ?>assets/templates/images/vs01_new.jpg"/>
+    </div>
 </div>
+
 <!-- 內容 start -->
 <div class="list">
 <div style="font-size:25px;margin-top:20px;margin-bottom:20px;color:#333;">
@@ -231,7 +158,7 @@ foreach ($index_list as $key => $root_value) {
 
 ?>
 
-
+<a href="#" id="back-to-top" title="Back to top"><span class="fa fa-chevron-up"></span></a>
 <!-- 最底宣告 -->
 <?php  $this->load->view('foot') ?>
 
@@ -279,4 +206,27 @@ foreach ($index_list as $key => $root_value) {
         $(".core_button").removeClass('button_click');
         $(".core").show();
     });
+    
+        /* back to top */
+    if ($('#back-to-top').length) {
+    var scrollTrigger = 100, // px
+        backToTop = function () {
+            var scrollTop = $(window).scrollTop();
+            if (scrollTop > scrollTrigger) {
+                $('#back-to-top').addClass('show');
+            } else {
+                $('#back-to-top').removeClass('show');
+            }
+        };
+    backToTop();
+    $(window).on('scroll', function () {
+        backToTop();
+    });
+    $('#back-to-top').on('click', function (e) {
+        e.preventDefault();
+        $('html,body').animate({
+            scrollTop: 0
+        }, 700);
+    });
+}
 </script>

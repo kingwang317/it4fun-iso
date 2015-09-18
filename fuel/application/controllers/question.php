@@ -17,11 +17,6 @@ class Question extends CI_Controller {
 		// echo "<pre>"; 
 		// print_r($index_list);
 		// exit;
-		$result = array();
-		$result = $this->get_sub_chapter(11,$result);
-		print_r($result);
-		die;
-
 		$vars['index_list'] = $index_list;
 		$vars['views'] = 'gri';
 		$vars['base_url'] = base_url();
@@ -209,21 +204,6 @@ class Question extends CI_Controller {
 			echo json_encode($result);
 		}
 		die();
-	}
-
-	function get_sub_chapter($code_id,$result){		
-
-		$array = $this->core_model->get_series_sub_detail($code_id);
-		if (sizeof($array)>0) {
-			foreach ($array as $key) {
-				array_push($result, $key->code_id);
-				$this->get_sub_chapter($key->code_id,$result);
-			}
-		}else{
-			array_push($result, $code_id);
-			// print_r($result);
-		}
-		return $result;
 	}
 
 	function formatGriObj($row,$cps_kind,$fc_id=-1){

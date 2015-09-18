@@ -17,221 +17,17 @@
 <script type="text/javascript" src="<?php echo site_url() ?>assets/templates/js/jquery.mousewheel.min.js" ></script>
 <script type="text/javascript" src="<?php echo site_url() ?>assets/templates/js/jquery.iviewer.min.js" ></script>
 <style>
-.sub{
-    width:90%;
-    margin: 5px 75px;
-}
-body{
-    background-color:#fff;
-}
 
-/*left side css*/
-.sub_left{
-    min-width:550px;
-    margin:10px 20px 0 0;
-    width:70%;
-    display:inline-block;
-    vertical-align:top;
-}
-.title{
-    font-size:20px;
-    line-height:30px;
-    margin:20px 450px 20px 5px;
-
-}
-.tag_list{
-    min-width:550px;
-}
-.tag{
-    margin-left:5px;
-    text-align:center;
-    font-size:16px;
-    display:inline-block;
-    width:120px;
-    height:40px;
-    line-height:40px;
-    border:solid 1px #ccc;
-    border-radius: 2px;
-    cursor: pointer;
-}
-.tag_click{
-    color:#E54040;
-    border-bottom:0;
-    height:47px;
-    line-height:40px;
-    position: relative;
-    margin-bottom:-15px;
-    background-color:white;
-    cursor: auto;
-}
-.left_content{
-    min-width: 550px;
-    margin: 5px 0 10px 0;
-    border-top: solid 1px #ccc;
-    padding-top: 20px;
-    line-height: 25px;
-    padding-left: 10px;
-}
-.content_title{
-    font-size:20px;
-    margin-top: 30px;
-}
-.content_detail{
-    font-size:16px;
-    color:#4c4c4c;
-}
-.content_block{
-    margin:10px 0 20px 0;
-}
-.content_slide{
-    font-size:16px;
-    padding-left:10px;
-    margin:5px;
-    border:solid 1px #ccc;
-    border-radius: 2px;
-    /*border-width: 1px 0 1px 0;*/
-    background:#F6F6F6;
-}
-.fa{
-    margin-right:5px;
-}
-
-.slide_title{
-    cursor: pointer;
-}
-.slide_title_hover{
-    color:#E54040;
-}
-.slide_title_click{
-    color:#E54040;
-}
-.slide_text{
-    color:#4c4c4c;
-    font-size:15px;
-    padding:0 20px 0 20px;
-}
-li{
-      list-style-type: disc;
-      margin-left: 40px;
-}
-/*left side css - END*/
-
-/*right side css*/
-.sub_right{
-    min-width:200px;
-    margin:55px 0px 20px 20px;
-    padding:20px;
-    font-size:18px;
-    width:20%;
-    display:inline-block;
-    background:#F6F6F6;
-    border:solid 1px #ccc;
-    border-radius: 2px;
-    font-width:normal;
-}
-.fa-file-text-o{
-    color:#E54040;
-}
-.right_line{
-    padding:20px 0px 10px 5px;
-    font-size:15px;
-    color:#E54040;
-    cursor: pointer;
-    line-height:20px;
-}
-.line_title{
-    display:inline-block;
-    vertical-align:top;
-    font-width:bold;
-}
-.line_title_mouseover{
-    color:#E57D7D;
-}
-.line_text{
-    /*width:60%;*/
-    min-width:135px;
-    display:inline-block;
-    vertical-align:top;
-}
-.author_style{
-    color: gray;
-}
-/*right side css - END*/
-* {
-    margin: 0;
-    padding: 0;
-}
-
-#iviewer {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    background: url('<?php echo site_url() ?>assets/templates/images/bg_transblack.png');
-    display: none;
-    z-index: 1;
-}
-
-#iviewer .controls {
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 40px;
-}
-
-#iviewer .controls li {
-    float: right;
-    clear: right;
-    position: relative;
-    width: 40px;
-    height: 40px;
-    background-repeat: no-repeat;
-    background-position: center center;
-    display: block;
-    cursor: pointer;
-    z-index: 3;
-}
-
-    #iviewer .controls:hover {
-        cursor: pointer;
-    }
-
-    #iviewer .controls .close { background-image: url('<?php echo site_url() ?>assets/templates/images/btn_close.png'); }
-    #iviewer .controls .zoomin { background-image: url('<?php echo site_url() ?>assets/templates/images/btn_zoomin.png'); }
-    #iviewer .controls .zoomout { background-image: url('<?php echo site_url() ?>assets/templates/images/btn_zoomout.png'); }
-
-#iviewer .info {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    text-align: center;
-    color: #ccc;
-    font-size: 16px;
-    padding: 0;
-}
-
-#iviewer .viewer {
-    position: fixed;
-    top: 0;
-    left: 40px;
-    z-index: 2;
-    display: none;
-}
-
-#iviewer .loader {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    background: url('<?php echo site_url() ?>assets/templates/images/spinner.gif') no-repeat center center;
-    z-index: 2;
-}
 </style>
 </head>
 <body>
 <!-- 上方檔案 ↓ -->
-<?php  $this->load->view('top') ?>
+
 <!-- Navigation -->
+<div id="detail_top">
+    <div id="top_title">GRI G4 中英雙語全文查詢系統</div>
+    <div id="top_phone"><span class="fa fa-phone"></span>&nbsp;0800-222-007</div>
+</div>
 <div id="nav" class="main_width"><div class="nav_mv">
 You are in <a href="<?php echo site_url() ?> ">首頁</a>
 <?php echo $breadcrumb.'&nbsp; &gt; &nbsp;'.$chapter_detail[0]->cp_key; ?>
@@ -241,16 +37,19 @@ You are in <a href="<?php echo site_url() ?> ">首頁</a>
 
 <!-- 中間內容區 ↓ -->
 <div class="sub">
-    <div class="title"><?php echo $chapter_detail[0]->cp_key?>：<?php echo  $chapter_detail[0]->title?></div>
+    
     <div class="sub_left">
-        
+        <div class="title"><?php echo $chapter_detail[0]->cp_key?>：<?php echo  $chapter_detail[0]->title?></div>
         <div class="tag_list">
             <div id="content1" class="tag" onclick="javascript:location.href='#1'">原文</div>
             <div id="content2" class="tag" onclick="javascript:location.href='#2'">解析</div>
+<!--暫時隱藏 wei 2015-05-29
             <div id="content3" class="tag" onclick="javascript:location.href='#3'">範例</div>
             <div id="content4" class="tag" onclick="javascript:location.href='#4'">撰寫</div>
+-->
         </div>
         <div class="left_content content1">
+            <div class="volume"><a href="#"><span id="volume_text"><img src="<?php echo site_url() ?>assets/templates/images/media-volume-2.png"/>文案有聲朗讀</span></a></div>
             <?php echo  htmlspecialchars_decode($chapter_detail[0]->description) ?>
         </div>
         <div class="left_content content2" style="display:none;">
@@ -260,8 +59,8 @@ You are in <a href="<?php echo site_url() ?> ">首頁</a>
             <?php foreach ($sample_list as $s_key => $s_value) {
                 ?>
             <div class="content_block">
-                <span class="author_style"><?php echo "the category (".htmlspecialchars_decode($s_value->kind_name).")" ?></span>
-                <div class="content_title"><?php echo htmlspecialchars_decode($s_value->title); ?></div>
+                <span class="author_style"><?php echo "Category：".htmlspecialchars_decode($s_value->kind_name)."" ?></span>
+                <div class="sample_content_title"><?php echo "Subject：".htmlspecialchars_decode($s_value->title); ?></div>
                 <div class="content_detail"><?php echo htmlspecialchars_decode($s_value->content); ?></div>
             </div>
 
@@ -292,6 +91,7 @@ You are in <a href="<?php echo site_url() ?> ">首頁</a>
             <?php 
         }?>
           </div>
+<?php  $this->load->view('foot') ?>
 </div>
 <!-- <div id="gzoomoverlay">
 </div>
@@ -314,9 +114,15 @@ You are in <a href="<?php echo site_url() ?> ">首頁</a>
         </div>
     </div>
 </div> -->
+
+<a href="#" id="back-to-top" title="Back to top"><span class="fa fa-chevron-up"></span></a>
 <!-- 內容 end -->
-</div></div>
+
+</div>
+
+</div>
 <!-- 最底宣告 -->
+
     <div id="iviewer">
         <div class="loader"></div>
 
@@ -396,7 +202,7 @@ You are in <a href="<?php echo site_url() ?> ">首頁</a>
                href:  this.src,
                class:'imagebox'
 
-            }))
+            })) });
 
     
     
@@ -416,12 +222,33 @@ You are in <a href="<?php echo site_url() ?> ">首頁</a>
 
         
 
-        });
+       
 
     
         }
     );
     
-    
+    /* back to top */
+    if ($('#back-to-top').length) {
+    var scrollTrigger = 100, // px
+        backToTop = function () {
+            var scrollTop = $(window).scrollTop();
+            if (scrollTop > scrollTrigger) {
+                $('#back-to-top').addClass('show');
+            } else {
+                $('#back-to-top').removeClass('show');
+            }
+        };
+    backToTop();
+    $(window).on('scroll', function () {
+        backToTop();
+    });
+    $('#back-to-top').on('click', function (e) {
+        e.preventDefault();
+        $('html,body').animate({
+            scrollTop: 0
+        }, 700);
+    });
+}
 </script>
 <script type="text/javascript" src="<?php echo site_url() ?>assets/templates/js/initbox.js" ></script>
