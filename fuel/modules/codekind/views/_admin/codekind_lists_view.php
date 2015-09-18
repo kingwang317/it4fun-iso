@@ -63,7 +63,7 @@
 						<th>分類描述</th>
 						<th>Level</th>
 						<th>更新時間</th>
-						<th>編輯</th>
+						<th>刪除</th>
 					</tr>
 				</thead>
 				<tbody>
